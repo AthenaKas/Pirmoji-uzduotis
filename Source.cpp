@@ -27,35 +27,55 @@ void rezultatai(data& a);
 
 int main()
 {
+	int N = 1;
 	data* mas;
-	mas = new data[1];
+	mas = new data[N];
+	data* tempmas;
 	string anw;
 	int n = 1; //kiekis pazymiu
 	
-	for (data* A = mas; A < mas + 1; A++)
+	for (int i = 0; i < N; i++)
 	{
-		ivestis(*A, n);
-		cout << "Ar norite ivesti dar vieno studento duomenis: "; cin >> anw;
-		if (anw != "yes") break;
-
+		ivestis(mas[i], n);
+		cout << "Ar norite ivesti dar vieno studento duomenis: [yes/no] "; cin >> anw;
+		if (anw != "yes")
+		{
+			break;
+		}
+		else if (anw == "yes")
+		{
+			tempmas = new data[N+1];
+			for (int i = 0; i < N; i++)
+			{
+				tempmas[i] = mas[i];
+			}
+			delete[] mas;
+			N++;
+			mas = new data[N];
+			for (int i = 0; i < N; i++)
+			{
+				mas[i] = tempmas[i];
+			}
+			delete[] tempmas;
+		}
 	}
 
-	for (data* A = mas; A < mas + 1; A++)
+	for (data* A = mas; A < mas + N; A++)
 	{
 		galutinisvid(*A, n);
 	}
 
-	for (data* A = mas; A < mas + 1; A++)
+	for (data* A = mas; A < mas + N; A++)
 	{
 		galutinismed(*A, n);
 	}
 
 	cout << setw(20) << "Vardas";
 	cout << setw(20) << "Pavarde";
-	cout << setw(20) << "Galutinis (Vid.)";
+	cout << setw(20) << "Galutinis (Vid.) /";
 	cout << setw(20) << "Galutinis (Med.)" << endl;
 	cout << endl;
-	for (data* A = mas; A < mas + 1; A++)
+	for (data* A = mas; A < mas + N; A++)
 	{
 		rezultatai(*A);
 	}
