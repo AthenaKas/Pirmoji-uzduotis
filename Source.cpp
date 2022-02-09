@@ -14,14 +14,14 @@ struct data
 {
 	string vard, pav; 
 	int paz[10], egz, n; //n - pazymiu kiekis
-	double vidrezult; //medrezult;
+	double vidrezult, medrezult;
 
 };
 
 //---
 void ivestis(data& a);
 void galutinisvid(data& a);
-//void galutinismed(data& a);
+void galutinismed(data& a);
 void rezultatai(data& a);
 //---
 
@@ -40,15 +40,15 @@ int main()
 		galutinisvid(*A);
 	}
 
-	/*for (data* A = mas; A < mas + 2; A++)
+	for (data* A = mas; A < mas + 2; A++)
 	{
 		galutinismed(*A);
-	}*/
+	}
 
 	cout << setw(20) << "Vardas";
 	cout << setw(20) << "Pavarde";
 	cout << setw(20) << "Galutinis (Vid.)";
-	//cout << setw(20) << "Galutinis (Med.)" << endl;
+	cout << setw(20) << "Galutinis (Med.)" << endl;
 	cout << endl;
 	for (data* A = mas; A < mas + 2; A++)
 	{
@@ -88,27 +88,27 @@ void galutinisvid(data& a) //su vidurkiu
 	a.vidrezult = 0.4 * vid + 0.6 * a.egz;
 }
 
-//void galutinismed(data& a)//su mediana
-//{
-//	double med;
-//
-//	if (a.n % 2 != 0)
-//	{
-//		med = a.paz[a.n / 2];
-//	}
-//	else
-//	{
-//		med =(double)(a.paz[a.n / 2] + a.paz[(a.n / 2) - 1]) / 2;
-//	}
-//
-//	a.medrezult = 0.4 * med + 0.6 * a.egz;
-//
-//}
+void galutinismed(data& a)//su mediana
+{
+	double med;
+
+	if (a.n % 2 != 0)
+	{
+		med = a.paz[a.n / 2];
+	}
+	else
+	{
+		med =(double)(a.paz[a.n / 2] + a.paz[(a.n / 2) - 1]) / 2;
+	}
+
+	a.medrezult = 0.4 * med + 0.6 * a.egz;
+
+}
 void rezultatai(data& a)
 {
 	cout << setw(20) << a.vard << setw(20) << a.pav;
 
-	cout << setw(20) << setprecision(2) << fixed << a.vidrezult << endl;
+	cout << setw(20) << setprecision(2) << fixed << a.vidrezult;
 
-	//cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
+	cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
 }
