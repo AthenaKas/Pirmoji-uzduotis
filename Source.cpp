@@ -14,13 +14,13 @@ struct data
 {
 	string vard, pav; 
 	int paz[10], egz, n; //n - pazymiu kiekis
-	//double vidrezult, medrezult;
+	double vidrezult; //medrezult;
 
 };
 
 //---
 void ivestis(data& a);
-//void galutinisvid(data& a);
+void galutinisvid(data& a);
 //void galutinismed(data& a);
 void rezultatai(data& a);
 //---
@@ -35,19 +35,19 @@ int main()
 		ivestis(*A);
 	}
 
-	/*for (data* A = mas; A < mas + 2; A++)
+	for (data* A = mas; A < mas + 2; A++)
 	{
 		galutinisvid(*A);
 	}
 
-	for (data* A = mas; A < mas + 2; A++)
+	/*for (data* A = mas; A < mas + 2; A++)
 	{
 		galutinismed(*A);
 	}*/
 
 	cout << setw(20) << "Vardas";
 	cout << setw(20) << "Pavarde";
-	//cout << setw(20) << "Galutinis (Vid.)";
+	cout << setw(20) << "Galutinis (Vid.)";
 	//cout << setw(20) << "Galutinis (Med.)" << endl;
 	cout << endl;
 	for (data* A = mas; A < mas + 2; A++)
@@ -73,21 +73,21 @@ void ivestis(data& a)
 	cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
 }
 
-//void galutinisvid(data& a) //su vidurkiu
-//{
-//	double vid = 0;
-//	int suma = 0;
-//
-//	for (int i = 0; i < a.n; i++)
-//	{
-//		suma += a.paz[i];
-//	}
-//
-//	vid = suma / (double)a.n;
-//
-//	a.vidrezult = 0.4 * vid + 0.6 * a.egz;
-//}
-//
+void galutinisvid(data& a) //su vidurkiu
+{
+	double vid = 0;
+	int suma = 0;
+
+	for (int i = 0; i < a.n; i++)
+	{
+		suma += a.paz[i];
+	}
+
+	vid = suma / (double)a.n;
+
+	a.vidrezult = 0.4 * vid + 0.6 * a.egz;
+}
+
 //void galutinismed(data& a)//su mediana
 //{
 //	double med;
@@ -108,12 +108,7 @@ void rezultatai(data& a)
 {
 	cout << setw(20) << a.vard << setw(20) << a.pav;
 
-	for (int i = 0; i < a.n; i++)
-	{
-		cout << setw(20) << a.paz[i];
-	}
-	cout << endl;
-	//cout << setw(20) << setprecision(2) << fixed << a.vidrezult;
+	cout << setw(20) << setprecision(2) << fixed << a.vidrezult << endl;
 
 	//cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
 }
