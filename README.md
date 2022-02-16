@@ -1,2 +1,4 @@
-# Pirmoji-uzduotis
-Sudarys v0.1, v0.2, v0.3, v0.4, v0.5 ir v1.0
+# Pirmoji-uzduotis v0.1
+Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
+1. Vartotojas įvedą studento vardą ir pavardę. Studentų kiekis nėra ribojamas. Suvedus reikiamus duomenis apie studentą, vartotojas gauna pakalausą: "Ar norite ivesti dar vieno studento duomenis: [yes/no]";
+2. 
