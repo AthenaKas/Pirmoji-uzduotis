@@ -1,6 +1,9 @@
 ﻿#include <iostream>
 #include <iomanip>
 #include <string>
+#include <iterator>
+#include <algorithm>
+#include <time.h>
 
 using std::cout;
 using std::cin;
@@ -9,13 +12,13 @@ using std::setw;
 using std::endl;
 using std::setprecision;
 using std::fixed;
+using std::sort;
 
 struct data
 {
 	string vard{}, pav{};
-	int paz[10]{}, egz{}; //n{}; //n - pazymiu kiekis
+	int paz[10]{}, egz{};
 	double vidrezult{}, medrezult{};
-
 };
 
 //---
@@ -32,11 +35,21 @@ int main()
 	mas = new data[N];
 	data* tempmas;
 	string anw;
-	int n = 1; //kiekis pazymiu
-	
+	int n = 0; //kiekis pazymiu
+
 	for (int i = 0; i < N; i++)
 	{
 		ivestis(mas[i], n);
+		//for (data* A = mas; A < mas + N; A++)
+	    //{
+		galutinisvid(mas[i], n);
+		//}
+
+		//for (data* A = mas; A < mas + N; A++)
+		//{
+		galutinismed(mas[i], n);
+		//}
+
 		cout << "Ar norite ivesti dar vieno studento duomenis: [yes/no] "; cin >> anw;
 		if (anw != "yes")
 		{
@@ -44,7 +57,7 @@ int main()
 		}
 		else if (anw == "yes")
 		{
-			tempmas = new data[N+1];
+			tempmas = new data[N + 1];
 			for (int i = 0; i < N; i++)
 			{
 				tempmas[i] = mas[i];
@@ -60,15 +73,6 @@ int main()
 		}
 	}
 
-	for (data* A = mas; A < mas + N; A++)
-	{
-		galutinisvid(*A, n);
-	}
-
-	for (data* A = mas; A < mas + N; A++)
-	{
-		galutinismed(*A, n);
-	}
 
 	cout << setw(20) << "Vardas";
 	cout << setw(20) << "Pavarde";
@@ -79,34 +83,57 @@ int main()
 	{
 		rezultatai(*A);
 	}
-	
+
 	delete[] mas;
 }
 
 void ivestis(data& a, int& n)
 {
 	string anw;
+	int x = 0;
+
 	cout << "Iveskite varda: "; cin >> a.vard;
 	cout << "Iveskite pavarde: "; cin >> a.pav;
 
-	//cout << "Iveskite kiek pazymiu turi studentas: ";  cin >> a.n;
-	cout << "Iveskite iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite 0 " << endl;
-
-	for (int i = 0; i < n; i++)
+	cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw;
+	
+	if (anw == "suvesti")
 	{
-		cout << "Iveskite " << i + 1 << " pazymi: ";
-		cin >> a.paz[i];
-		if (a.paz[i] == 0)
-		{
-			break;
-		}
-		else {
-			n++;
-		}
-	}
-	n--;
+		n = 1;
+		cout << "Iveskite iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [0] " << endl;
 
-	cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
+		for (int i = 0; i < n; i++)
+		{
+			cout << "Iveskite " << i + 1 << " pazymi: ";
+			cin >> a.paz[i];
+			if (a.paz[i] == 0)
+			{
+				break;
+			}
+			else {
+				n++;
+			}
+		}
+		n--;
+	    cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
+	}
+	else if(anw == "generuoti")
+	{
+		n = rand() % 10+1;
+
+		srand(time(0));
+
+		for (int i = 0; i < n; i++)
+		{
+			a.paz[i] = rand() % 10+1;
+		}
+
+		a.egz = rand() % 10 + 1;
+
+	}
+	
+
+	
 
 }
 
@@ -120,7 +147,7 @@ void galutinisvid(data& a, int& n) //su vidurkiu
 		suma += a.paz[i];
 	}
 
-	vid = suma / (double)n;
+	vid = suma / (double)(n);
 
 	a.vidrezult = 0.4 * vid + 0.6 * a.egz;
 }
@@ -128,14 +155,15 @@ void galutinisvid(data& a, int& n) //su vidurkiu
 void galutinismed(data& a, int& n)//su mediana
 {
 	double med;
+	sort(a.paz, a.paz + n);
 
 	if (n % 2 != 0)
 	{
-		med = a.paz[n / 2];
+		med = (double)a.paz[n / 2];
 	}
 	else
 	{
-		med = (double)(a.paz[n / 2] + a.paz[(n / 2) - 1]) / 2;
+		med = (double)(a.paz[(n - 1) / 2] + a.paz[n / 2]) / 2;
 	}
 
 	a.medrezult = 0.4 * med + 0.6 * a.egz;
