@@ -1,9 +1,9 @@
-﻿#include <iostream>
+#include <iostream>
 #include <iomanip>
 #include <string>
+#include <vector>
 #include <iterator>
 #include <algorithm>
-#include <time.h>
 
 using std::cout;
 using std::cin;
@@ -13,6 +13,7 @@ using std::endl;
 using std::setprecision;
 using std::fixed;
 using std::sort;
+using std::vector;
 
 struct data
 {
@@ -30,24 +31,26 @@ void rezultatai(data& a);
 
 int main()
 {
+	vector <data> sarasas;
+	data laik;
+
 	int N = 1;
-	data* mas;
-	mas = new data[N];
-	data* tempmas;
+
 	string anw;
-	int n = 0; //kiekis pazymiu
+	int n = 1; //kiekis pazymiu
 
 	for (int i = 0; i < N; i++)
 	{
-		ivestis(mas[i], n);
+		ivestis(laik, n);
+		sarasas.push_back(laik);
 		//for (data* A = mas; A < mas + N; A++)
-	    //{
-		galutinisvid(mas[i], n);
+	   //{
+		galutinisvid(laik, n);
 		//}
 
 		//for (data* A = mas; A < mas + N; A++)
 		//{
-		galutinismed(mas[i], n);
+		galutinismed(laik, n);
 		//}
 
 		cout << "Ar norite ivesti dar vieno studento duomenis: [yes/no] "; cin >> anw;
@@ -57,83 +60,48 @@ int main()
 		}
 		else if (anw == "yes")
 		{
-			tempmas = new data[N + 1];
-			for (int i = 0; i < N; i++)
-			{
-				tempmas[i] = mas[i];
-			}
-			delete[] mas;
 			N++;
-			mas = new data[N];
-			for (int i = 0; i < N; i++)
-			{
-				mas[i] = tempmas[i];
-			}
-			delete[] tempmas;
+			sarasas.resize(N);
 		}
 	}
 
 
 	cout << setw(20) << "Vardas";
 	cout << setw(20) << "Pavarde";
-	cout << setw(20) << "Galutinis (Vid.) /";
+	cout << setw(20) << "Galutinis (Vid.)";
 	cout << setw(20) << "Galutinis (Med.)" << endl;
 	cout << endl;
-	for (data* A = mas; A < mas + N; A++)
+	for (int i = 0; i < sarasas.size(); i++)
 	{
-		rezultatai(*A);
+		rezultatai(sarasas.at(i));
 	}
-
-	delete[] mas;
+	sarasas.clear();
 }
 
 void ivestis(data& a, int& n)
 {
-	string anw;
-	int x = 0;
-
 	cout << "Iveskite varda: "; cin >> a.vard;
 	cout << "Iveskite pavarde: "; cin >> a.pav;
 
-	cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw;
-	
-	if (anw == "suvesti")
+	//cout << "Iveskite kiek pazymiu turi studentas: ";  cin >> a.n;
+	n = 1;
+	cout << "Iveskite iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite 0 " << endl;
+
+	for (int i = 0; i < n; i++)
 	{
-		n = 1;
-		cout << "Iveskite iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [0] " << endl;
-
-		for (int i = 0; i < n; i++)
+		cout << "Iveskite " << i + 1 << " pazymi: ";
+		cin >> a.paz[i];
+		if (a.paz[i] == 0)
 		{
-			cout << "Iveskite " << i + 1 << " pazymi: ";
-			cin >> a.paz[i];
-			if (a.paz[i] == 0)
-			{
-				break;
-			}
-			else {
-				n++;
-			}
+			break;
 		}
-		n--;
-	    cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
-	}
-	else if(anw == "generuoti")
-	{
-		n = rand() % 10+1;
-
-		srand(time(0));
-
-		for (int i = 0; i < n; i++)
-		{
-			a.paz[i] = rand() % 10+1;
+		else {
+			n++;
 		}
-
-		a.egz = rand() % 10 + 1;
-
 	}
-	
+	n--;
 
-	
+	cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
 
 }
 
