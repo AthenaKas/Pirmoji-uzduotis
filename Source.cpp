@@ -90,13 +90,12 @@ int main()
 void ivestis(data& a, int& n)
 {
 	string anw;
-	int x = 0;
 
 	cout << "Iveskite varda: "; cin >> a.vard;
 	cout << "Iveskite pavarde: "; cin >> a.pav;
 
 	cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw;
-	
+
 	if (anw == "suvesti")
 	{
 		n = 1;
@@ -131,9 +130,9 @@ void ivestis(data& a, int& n)
 		a.egz = rand() % 10 + 1;
 
 	}
-	
 
-	
+
+
 
 }
 
