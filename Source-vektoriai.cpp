@@ -4,6 +4,7 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
+#include <time.h>
 
 using std::cout;
 using std::cin;
@@ -31,27 +32,21 @@ void rezultatai(data& a);
 
 int main()
 {
-	vector <data> sarasas;
-	data laik;
-
 	int N = 1;
-
+	vector<data> sarasas;
+	data laik;
 	string anw;
-	int n = 1; //kiekis pazymiu
+	int n = 0; //kiekis pazymiu
 
 	for (int i = 0; i < N; i++)
 	{
 		ivestis(laik, n);
-		sarasas.push_back(laik);
-		//for (data* A = mas; A < mas + N; A++)
-	   //{
-		galutinisvid(laik, n);
-		//}
 
-		//for (data* A = mas; A < mas + N; A++)
-		//{
+		galutinisvid(laik, n);
+
 		galutinismed(laik, n);
-		//}
+
+		sarasas.push_back(laik);
 
 		cout << "Ar norite ivesti dar vieno studento duomenis: [yes/no] "; cin >> anw;
 		if (anw != "yes")
@@ -61,7 +56,7 @@ int main()
 		else if (anw == "yes")
 		{
 			N++;
-			sarasas.resize(N);
+			sarasas.reserve(N);
 		}
 	}
 
@@ -71,37 +66,60 @@ int main()
 	cout << setw(20) << "Galutinis (Vid.)";
 	cout << setw(20) << "Galutinis (Med.)" << endl;
 	cout << endl;
-	for (int i = 0; i < sarasas.size(); i++)
+	for (int i = 0; i<sarasas.size(); i++)
 	{
-		rezultatai(sarasas.at(i));
+		rezultatai(sarasas[i]);
 	}
+
 	sarasas.clear();
 }
 
 void ivestis(data& a, int& n)
 {
+	string anw;
+
 	cout << "Iveskite varda: "; cin >> a.vard;
 	cout << "Iveskite pavarde: "; cin >> a.pav;
 
-	//cout << "Iveskite kiek pazymiu turi studentas: ";  cin >> a.n;
-	n = 1;
-	cout << "Iveskite iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite 0 " << endl;
+	cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw;
 
-	for (int i = 0; i < n; i++)
+	if (anw == "suvesti")
 	{
-		cout << "Iveskite " << i + 1 << " pazymi: ";
-		cin >> a.paz[i];
-		if (a.paz[i] == 0)
-		{
-			break;
-		}
-		else {
-			n++;
-		}
-	}
-	n--;
+		n = 1;
+		cout << "Iveskite iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [0] " << endl;
 
-	cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
+		for (int i = 0; i < n; i++)
+		{
+			cout << "Iveskite " << i + 1 << " pazymi: ";
+			cin >> a.paz[i];
+			if (a.paz[i] == 0)
+			{
+				break;
+			}
+			else {
+				n++;
+			}
+		}
+		n--;
+	    cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
+	}
+	else if(anw == "generuoti")
+	{
+		n = rand() % 10+1;
+
+		srand(time(0));
+
+		for (int i = 0; i < n; i++)
+		{
+			a.paz[i] = rand() % 10+1;
+		}
+
+		a.egz = rand() % 10 + 1;
+
+	}
+
+
+
 
 }
 
