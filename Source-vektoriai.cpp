@@ -35,7 +35,7 @@ int main()
 	int N = 1;
 	vector<data> sarasas;
 	data laik;
-	string anw;
+	string anw; // ats: apie dar vieno studento duomenu vedima
 	int n = 0; //kiekis pazymiu
 
 	for (int i = 0; i < N; i++)
@@ -76,47 +76,79 @@ int main()
 
 void ivestis(data& a, int& n)
 {
-	string anw;
+	string anw; //ats: suvesti ar generuoti pazymius
+	char x; //skirtas patikrinti ar ivedamas pazymys yra skaicius
+	int y = 0; // generacija/suvedimas
 
 	cout << "Iveskite varda: "; cin >> a.vard;
 	cout << "Iveskite pavarde: "; cin >> a.pav;
 
 	cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw;
 
-	if (anw == "suvesti")
+	do
 	{
-		n = 1;
-		cout << "Iveskite iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [0] " << endl;
 
-		for (int i = 0; i < n; i++)
+		if (anw == "suvesti")
 		{
-			cout << "Iveskite " << i + 1 << " pazymi: ";
-			cin >> a.paz[i];
-			if (a.paz[i] == 0)
+			n = 1;
+			cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [s] " << endl;
+
+			for (int i = 0; i < n; i++)
 			{
-				break;
+				cout << "Iveskite " << i + 1 << " pazymi: ";
+				cin >> x;
+				if ((x == 's'))//jei iveda [s]
+				{
+					if (n > 1) //daugiau nebegalima vesti pazymiu
+					{
+						break;
+					}
+					else
+					{
+						cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite : [s]" << endl; //ivesta maziau nei vienas pazymys
+						i--;
+					}
+				}
+				else
+				{
+					if (isdigit(x)) //tiktina ar ivesta reiksme skaicius
+					{
+						a.paz[i] = x - 48;
+						n++;
+					}
+					else
+					{
+						cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite : [s]" << endl; //ivede ne skaiciu
+						i--;
+					}
+
+				}
 			}
-			else {
-				n++;
-			}
+			n--;
+			cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
+
+			y++;
 		}
-		n--;
-	    cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
-	}
-	else if(anw == "generuoti")
-	{
-		n = rand() % 10+1;
-
-		srand(time(0));
-
-		for (int i = 0; i < n; i++)
+		else if (anw == "generuoti")
 		{
-			a.paz[i] = rand() % 10+1;
+			n = rand() % 10 + 1;
+
+			srand(time(0));
+
+			for (int i = 0; i < n; i++)
+			{
+				a.paz[i] = rand() % 10 + 1;
+			}
+
+			a.egz = rand() % 10 + 1;
+
+			y++;
 		}
-
-		a.egz = rand() % 10 + 1;
-
-	}
+		else
+		{
+			cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw; //jei nebuvo irasyta suvesti/generuoti
+		}
+	} while (y == 0);
 
 
 
