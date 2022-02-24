@@ -1,10 +1,11 @@
-#include <iostream>
+﻿#include <iostream>
 #include <iomanip>
 #include <string>
 #include <vector>
 #include <iterator>
 #include <algorithm>
-#include <time.h>
+#include <ctime>
+#include <fstream>
 
 using std::cout;
 using std::cin;
@@ -15,20 +16,24 @@ using std::setprecision;
 using std::fixed;
 using std::sort;
 using std::vector;
+using std::ifstream;
 
 struct data
 {
 	string vard{}, pav{};
-	int paz[10]{}, egz{};
+	int paz[5]{}, egz{};
 	double vidrezult{}, medrezult{};
 };
 
 //---
 void ivestis(data& a, int& n);
+void nuskaitymas(data& a, int & n);
 void galutinisvid(data& a, int& n);
 void galutinismed(data& a, int& n);
 void rezultatai(data& a);
 //---
+
+const char CDfv[] = "kursiokai.txt";
 
 int main()
 {
@@ -36,42 +41,74 @@ int main()
 	vector<data> sarasas;
 	data laik;
 	string anw; // ats: apie dar vieno studento duomenu vedima
+	string anw2; //ats: ar skaityti is failo
 	int n = 0; //kiekis pazymiu
 
-	for (int i = 0; i < N; i++)
+	cout << "Ar nuskaityti studentu duomenys is failo? [y/n] "; cin >> anw2;
+
+	if ((anw2 == "n") || (anw2 == "N"))
 	{
-		ivestis(laik, n);
-
-		galutinisvid(laik, n);
-
-		galutinismed(laik, n);
-
-		sarasas.push_back(laik);
-
-		cout << "Ar norite ivesti dar vieno studento duomenis: [yes/no] "; cin >> anw;
-		if (anw != "yes")
+		for (int i = 0; i < N; i++)
 		{
-			break;
+			ivestis(laik, n);
+
+			galutinisvid(laik, n);
+
+			galutinismed(laik, n);
+
+			sarasas.push_back(laik);
+
+			cout << "Ar norite ivesti dar vieno studento duomenis: [y/n] "; cin >> anw;
+			if (anw != "y")
+			{
+				break;
+			}
+			else if (anw == "y")
+			{
+				N++;
+				sarasas.reserve(N);
+			}
 		}
-		else if (anw == "yes")
+	}
+	else if ((anw2 == "y") || (anw2 == "Y"))
+	{	
+		ifstream fd(CDfv);
+		
+		for (int i = 0; i < 2; i++)
 		{
+			//nuskaitymas(laik, n);
+
+				fd >> laik.vard >> laik.pav;
+				for (int i = 0; i < 5; i++)
+				{
+					fd >> laik.paz[i];
+					cout << laik.paz[i] << endl;;
+				}
+				fd >> laik.egz;
+				n = 5;
+			galutinisvid(laik, n);
+
+			galutinismed(laik, n);
+
+			sarasas.push_back(laik);
 			N++;
 			sarasas.reserve(N);
+
 		}
+
 	}
 
+		cout << setw(20) << "Vardas";
+		cout << setw(20) << "Pavarde";
+		cout << setw(20) << "Galutinis (Vid.)";
+		cout << setw(20) << "Galutinis (Med.)" << endl;
+		cout << endl;
+		for (int i = 0; i < sarasas.size(); i++)
+		{
+			rezultatai(sarasas[i]);
+		}
 
-	cout << setw(20) << "Vardas";
-	cout << setw(20) << "Pavarde";
-	cout << setw(20) << "Galutinis (Vid.)";
-	cout << setw(20) << "Galutinis (Med.)" << endl;
-	cout << endl;
-	for (int i = 0; i<sarasas.size(); i++)
-	{
-		rezultatai(sarasas[i]);
-	}
-
-	sarasas.clear();
+		sarasas.clear();
 }
 
 void ivestis(data& a, int& n)
@@ -80,15 +117,16 @@ void ivestis(data& a, int& n)
 	char x; //skirtas patikrinti ar ivedamas pazymys yra skaicius
 	int y = 0; // generacija/suvedimas
 
+
 	cout << "Iveskite varda: "; cin >> a.vard;
 	cout << "Iveskite pavarde: "; cin >> a.pav;
 
-	cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw;
+	cout << "Ar atsitiktinai sugeneruoti pazymius ? [y/n] "; cin >> anw;
 
 	do
 	{
 
-		if (anw == "suvesti")
+		if ((anw == "n")||(anw == "N"))
 		{
 			n = 1;
 			cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [s] " << endl;
@@ -97,7 +135,7 @@ void ivestis(data& a, int& n)
 			{
 				cout << "Iveskite " << i + 1 << " pazymi: ";
 				cin >> x;
-				if ((x == 's'))//jei iveda [s]
+				if ((x == 's')||(x == 'S'))//jei iveda [s]
 				{
 					if (n > 1) //daugiau nebegalima vesti pazymiu
 					{
@@ -129,7 +167,7 @@ void ivestis(data& a, int& n)
 
 			y++;
 		}
-		else if (anw == "generuoti")
+		else if ((anw == "y")|| (anw =="Y"))
 		{
 			n = rand() % 10 + 1;
 
@@ -154,7 +192,9 @@ void ivestis(data& a, int& n)
 
 
 }
-
+void nuskaitymas(data& a, int& n)
+{
+}
 void galutinisvid(data& a, int& n) //su vidurkiu
 {
 	double vid = 0;
@@ -169,7 +209,6 @@ void galutinisvid(data& a, int& n) //su vidurkiu
 
 	a.vidrezult = 0.4 * vid + 0.6 * a.egz;
 }
-
 void galutinismed(data& a, int& n)//su mediana
 {
 	double med;
@@ -183,6 +222,7 @@ void galutinismed(data& a, int& n)//su mediana
 	{
 		med = (double)(a.paz[(n - 1) / 2] + a.paz[n / 2]) / 2;
 	}
+	cout << "MMEED " << med << endl;
 
 	a.medrezult = 0.4 * med + 0.6 * a.egz;
 
