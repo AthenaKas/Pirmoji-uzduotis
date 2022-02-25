@@ -27,9 +27,9 @@ struct data
 
 //---
 void ivestis(data& a, int& n);
-void nuskaitymas(data& a, int & n);
 void galutinisvid(data& a, int& n);
 void galutinismed(data& a, int& n);
+void rikiavimas(data& a, int n, vector<data>& sarasas);
 void rezultatai(data& a);
 //---
 
@@ -74,18 +74,17 @@ int main()
 	{	
 		ifstream fd(CDfv);
 		
-		for (int i = 0; i < 2; i++)
+		for (int i = 0; i < 3; i++)
 		{
-			//nuskaitymas(laik, n);
 
 				fd >> laik.vard >> laik.pav;
 				for (int i = 0; i < 5; i++)
 				{
 					fd >> laik.paz[i];
-					cout << laik.paz[i] << endl;;
 				}
 				fd >> laik.egz;
 				n = 5;
+
 			galutinisvid(laik, n);
 
 			galutinismed(laik, n);
@@ -98,6 +97,8 @@ int main()
 
 	}
 
+	rikiavimas(laik, n, sarasas);
+	
 		cout << setw(20) << "Vardas";
 		cout << setw(20) << "Pavarde";
 		cout << setw(20) << "Galutinis (Vid.)";
@@ -192,9 +193,6 @@ void ivestis(data& a, int& n)
 
 
 }
-void nuskaitymas(data& a, int& n)
-{
-}
 void galutinisvid(data& a, int& n) //su vidurkiu
 {
 	double vid = 0;
@@ -222,15 +220,47 @@ void galutinismed(data& a, int& n)//su mediana
 	{
 		med = (double)(a.paz[(n - 1) / 2] + a.paz[n / 2]) / 2;
 	}
-	cout << "MMEED " << med << endl;
 
 	a.medrezult = 0.4 * med + 0.6 * a.egz;
+
+}
+void rikiavimas(data& a, int n, vector<data>& sarasas)
+{
+	string tempvard = sarasas[0].vard;
+	string temppav = sarasas[0].pav;
+	double tempvid = sarasas[0].vidrezult;
+	double tempmed = sarasas[0].medrezult;
+
+	for (int i = 0; i < 3; i++)
+	{
+		for (int j = 0; j < 3; j++)
+		{
+			if (sarasas[i].vard <= tempvard)
+			{
+				tempvard = sarasas[i].vard;
+				sarasas[i].vard = sarasas[j].vard;
+				sarasas[j].vard = tempvard;
+
+				temppav = sarasas[i].pav;
+				sarasas[i].pav = sarasas[j].pav;
+				sarasas[j].pav = temppav;
+
+				tempvid = sarasas[i].vidrezult;
+				sarasas[i].vidrezult = sarasas[j].vidrezult;
+				sarasas[j].vidrezult = tempvid;
+
+				tempmed = sarasas[i].medrezult;
+				sarasas[i].medrezult = sarasas[j].medrezult;
+				sarasas[j].medrezult = tempmed;
+			}
+		}
+	}
 
 }
 void rezultatai(data& a)
 {
 	cout << setw(20) << a.vard << setw(20) << a.pav;
-
+	
 	cout << setw(20) << setprecision(2) << fixed << a.vidrezult;
 
 	cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
