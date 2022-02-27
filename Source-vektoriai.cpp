@@ -1,39 +1,15 @@
-﻿#include <iostream>
-#include <iomanip>
-#include <string>
-#include <vector>
-#include <iterator>
-#include <algorithm>
-#include <ctime>
-#include <fstream>
+﻿//Source-vektoriai MAIN
 
-using std::cout;
-using std::cin;
-using std::string;
-using std::setw;
-using std::endl;
-using std::setprecision;
-using std::fixed;
-using std::sort;
-using std::vector;
-using std::ifstream;
-
-struct data
-{
-	string vard{}, pav{};
-	int paz[5]{}, egz{};
-	double vidrezult{}, medrezult{};
-};
+#include "header.h"
 
 //---
 void ivestis(data& a, int& n);
 void galutinisvid(data& a, int& n);
 void galutinismed(data& a, int& n);
-void rikiavimas(data& a, int n, vector<data>& sarasas);
+void rikiavimas(data& a, int n, vector<data>& sarasas, int N);
 void rezultatai(data& a);
 //---
 
-const char CDfv[] = "kursiokai.txt";
 
 int main()
 {
@@ -43,225 +19,100 @@ int main()
 	string anw; // ats: apie dar vieno studento duomenu vedima
 	string anw2; //ats: ar skaityti is failo
 	int n = 0; //kiekis pazymiu
+	int y = 0; //ar nuskaityti duomenis loop
 
 	cout << "Ar nuskaityti studentu duomenys is failo? [y/n] "; cin >> anw2;
+	
+	ifstream fd(CDfv);
 
-	if ((anw2 == "n") || (anw2 == "N"))
+	if((anw2 == "y")||( anw2 == "Y"))
 	{
-		for (int i = 0; i < N; i++)
-		{
-			ivestis(laik, n);
-
-			galutinisvid(laik, n);
-
-			galutinismed(laik, n);
-
-			sarasas.push_back(laik);
-
-			cout << "Ar norite ivesti dar vieno studento duomenis: [y/n] "; cin >> anw;
-			if (anw != "y")
+		
+		try {
+			if (fd)
 			{
-				break;
+
 			}
-			else if (anw == "y")
+			else
 			{
-				N++;
-				sarasas.reserve(N);
+				throw 505;
 			}
 		}
-	}
-	else if ((anw2 == "y") || (anw2 == "Y"))
-	{	
-		ifstream fd(CDfv);
-		
-		for (int i = 0; i < 3; i++)
+		catch (...)//tikrina ar yra failas
 		{
+			cout << "Sukurkite studentu duomenu faila";
+			return 1;
+		}
+	}
 
+	do {
+		if ((anw2 == "n") || (anw2 == "N"))
+		{
+			for (int i = 0; i < N; i++)
+			{
+				ivestis(laik, n);
+
+				galutinisvid(laik, n);
+
+				galutinismed(laik, n);
+
+				sarasas.push_back(laik);
+
+				cout << "Ar norite ivesti dar vieno studento duomenis: [y/n] "; cin >> anw;
+				if (anw != "y")
+				{
+					break;
+				}
+				else
+				{
+					N++;
+					sarasas.reserve(N);
+				}
+			}
+			y++;
+		}
+		else if ((anw2 == "y") || (anw2 == "Y"))
+		{
+			for (int i = 0; i < 10000; i++)
+			{
 				fd >> laik.vard >> laik.pav;
-				for (int i = 0; i < 5; i++)
+				for (int i = 0; i < 15; i++)
 				{
 					fd >> laik.paz[i];
 				}
 				fd >> laik.egz;
-				n = 5;
+				n = 15;
 
-			galutinisvid(laik, n);
+				galutinisvid(laik, n);
 
-			galutinismed(laik, n);
+				galutinismed(laik, n);
 
-			sarasas.push_back(laik);
-			N++;
-			sarasas.reserve(N);
+				sarasas.push_back(laik);
 
+				N++;
+				sarasas.reserve(N);
+
+				y++;
+			}
 		}
+		else
+		{
+			cout << "Ar nuskaityti studentu duomenys is failo? [y/n] "; cin >> anw2;
+		}
+	} while (y == 0);
 
-	}
-
-	rikiavimas(laik, n, sarasas);
+	//rikiavimas(laik, n, sarasas, N);
 	
-		cout << setw(20) << "Vardas";
-		cout << setw(20) << "Pavarde";
-		cout << setw(20) << "Galutinis (Vid.)";
+		cout << setw(20) << "Vardas"<< " | ";
+		cout << setw(20) << "Pavarde" << " | ";
+		cout << setw(20) << "Galutinis (Vid.)" << " | ";
 		cout << setw(20) << "Galutinis (Med.)" << endl;
-		cout << endl;
+		cout << setw(23)<<" | "<< setw(23)<<" | "<< setw(23)<<" | " << endl;
+
 		for (int i = 0; i < sarasas.size(); i++)
 		{
 			rezultatai(sarasas[i]);
 		}
 
 		sarasas.clear();
-}
-
-void ivestis(data& a, int& n)
-{
-	string anw; //ats: suvesti ar generuoti pazymius
-	char x; //skirtas patikrinti ar ivedamas pazymys yra skaicius
-	int y = 0; // generacija/suvedimas
-
-
-	cout << "Iveskite varda: "; cin >> a.vard;
-	cout << "Iveskite pavarde: "; cin >> a.pav;
-
-	cout << "Ar atsitiktinai sugeneruoti pazymius ? [y/n] "; cin >> anw;
-
-	do
-	{
-
-		if ((anw == "n")||(anw == "N"))
-		{
-			n = 1;
-			cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [s] " << endl;
-
-			for (int i = 0; i < n; i++)
-			{
-				cout << "Iveskite " << i + 1 << " pazymi: ";
-				cin >> x;
-				if ((x == 's')||(x == 'S'))//jei iveda [s]
-				{
-					if (n > 1) //daugiau nebegalima vesti pazymiu
-					{
-						break;
-					}
-					else
-					{
-						cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite : [s]" << endl; //ivesta maziau nei vienas pazymys
-						i--;
-					}
-				}
-				else
-				{
-					if (isdigit(x)) //tiktina ar ivesta reiksme skaicius
-					{
-						a.paz[i] = x - 48;
-						n++;
-					}
-					else
-					{
-						cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite : [s]" << endl; //ivede ne skaiciu
-						i--;
-					}
-
-				}
-			}
-			n--;
-			cout << "Iveskite egzamino ivertinima: "; cin >> a.egz;
-
-			y++;
-		}
-		else if ((anw == "y")|| (anw =="Y"))
-		{
-			n = rand() % 10 + 1;
-
-			srand(time(0));
-
-			for (int i = 0; i < n; i++)
-			{
-				a.paz[i] = rand() % 10 + 1;
-			}
-
-			a.egz = rand() % 10 + 1;
-
-			y++;
-		}
-		else
-		{
-			cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw; //jei nebuvo irasyta suvesti/generuoti
-		}
-	} while (y == 0);
-
-
-
-
-}
-void galutinisvid(data& a, int& n) //su vidurkiu
-{
-	double vid = 0;
-	int suma = 0;
-
-	for (int i = 0; i < n; i++)
-	{
-		suma += a.paz[i];
-	}
-
-	vid = suma / (double)(n);
-
-	a.vidrezult = 0.4 * vid + 0.6 * a.egz;
-}
-void galutinismed(data& a, int& n)//su mediana
-{
-	double med;
-	sort(a.paz, a.paz + n);
-
-	if (n % 2 != 0)
-	{
-		med = (double)a.paz[n / 2];
-	}
-	else
-	{
-		med = (double)(a.paz[(n - 1) / 2] + a.paz[n / 2]) / 2;
-	}
-
-	a.medrezult = 0.4 * med + 0.6 * a.egz;
-
-}
-void rikiavimas(data& a, int n, vector<data>& sarasas)
-{
-	string tempvard = sarasas[0].vard;
-	string temppav = sarasas[0].pav;
-	double tempvid = sarasas[0].vidrezult;
-	double tempmed = sarasas[0].medrezult;
-
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			if (sarasas[i].vard <= tempvard)
-			{
-				tempvard = sarasas[i].vard;
-				sarasas[i].vard = sarasas[j].vard;
-				sarasas[j].vard = tempvard;
-
-				temppav = sarasas[i].pav;
-				sarasas[i].pav = sarasas[j].pav;
-				sarasas[j].pav = temppav;
-
-				tempvid = sarasas[i].vidrezult;
-				sarasas[i].vidrezult = sarasas[j].vidrezult;
-				sarasas[j].vidrezult = tempvid;
-
-				tempmed = sarasas[i].medrezult;
-				sarasas[i].medrezult = sarasas[j].medrezult;
-				sarasas[j].medrezult = tempmed;
-			}
-		}
-	}
-
-}
-void rezultatai(data& a)
-{
-	cout << setw(20) << a.vard << setw(20) << a.pav;
-	
-	cout << setw(20) << setprecision(2) << fixed << a.vidrezult;
-
-	cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
 }
