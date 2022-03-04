@@ -1,4 +1,4 @@
-﻿//Source-vektoriai MAIN
+//Source-vektoriai MAIN
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -287,7 +287,4 @@ void rezultatai(data& a)
 
 	cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
 }
-bool rikiavimas(const data& a, const data& b)
-{
-	return a.vard < b.vard;
-}
+bool rikiavimas(const data& a, 
