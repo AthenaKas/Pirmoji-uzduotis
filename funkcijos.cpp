@@ -58,16 +58,17 @@ void ivestis(data& a, int& n)
 		}
 		else if ((anw == "y") || (anw == "Y"))
 		{
-			n = rand() % 10 + 1;
+			using hrClock = std::chrono::high_resolution_clock;
+			std::mt19937 mt(static_cast<long unsigned int>(hrClock::now().time_since_epoch().count()));
+			std::uniform_int_distribution<int> dist(1, 10);
 
-			srand(time(0));
+			n = dist(mt);
 
-			for (int i = 0; i < n; i++)
-			{
-				a.paz[i] = rand() % 10 + 1;
+			for (int i = 0; i < n; i++) {
+				a.paz[i] == dist(mt);
 			}
 
-			a.egz = rand() % 10 + 1;
+			a.egz = dist(mt);
 
 			y++;
 		}
@@ -109,67 +110,6 @@ void galutinismed(data& a, int& n)//su mediana
 	a.medrezult = 0.4 * med + 0.6 * a.egz;
 
 }
-void rikiavimas(data& a, int n, vector<data>& sarasas, int N)
-{
-	string tempvard = sarasas[0].vard;
-	string temppav = sarasas[0].pav;
-	double tempvid = sarasas[0].vidrezult;
-	double tempmed = sarasas[0].medrezult;
-	N = 3;
-
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			if (sarasas[i].vard <= tempvard)
-			{
-				tempvard = sarasas[i].vard;
-				sarasas[i].vard = sarasas[j].vard;
-				sarasas[j].vard = tempvard;
-
-				temppav = sarasas[i].pav;
-				sarasas[i].pav = sarasas[j].pav;
-				sarasas[j].pav = temppav;
-
-				tempvid = sarasas[i].vidrezult;
-				sarasas[i].vidrezult = sarasas[j].vidrezult;
-				sarasas[j].vidrezult = tempvid;
-
-				tempmed = sarasas[i].medrezult;
-				sarasas[i].medrezult = sarasas[j].medrezult;
-				sarasas[j].medrezult = tempmed;
-			}
-		}
-	}
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			if (sarasas[i].vard == sarasas[j].vard)
-			{
-				if (sarasas[i].pav < sarasas[j].pav)
-				{
-					tempvard = sarasas[i].vard;
-					sarasas[i].vard = sarasas[j].vard;
-					sarasas[j].vard = tempvard;
-
-					temppav = sarasas[i].pav;
-					sarasas[i].pav = sarasas[j].pav;
-					sarasas[j].pav = temppav;
-
-					tempvid = sarasas[i].vidrezult;
-					sarasas[i].vidrezult = sarasas[j].vidrezult;
-					sarasas[j].vidrezult = tempvid;
-
-					tempmed = sarasas[i].medrezult;
-					sarasas[i].medrezult = sarasas[j].medrezult;
-					sarasas[j].medrezult = tempmed;
-				}
-			}
-		}
-	}
-
-} //vardu
 void rezultatai(data& a)
 {
 	cout << setw(20) << a.vard << " | " << setw(20) << a.pav << " | ";
@@ -177,4 +117,8 @@ void rezultatai(data& a)
 	cout << setw(20) << setprecision(2) << fixed << a.vidrezult << " | ";
 
 	cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
+}
+bool rikiavimas(const data& a, const data& b)
+{
+	return a.vard < b.vard;
 }
