@@ -1,11 +1,18 @@
-﻿#include <iostream>
+﻿//Source-vektoriai MAIN
+#include <iostream>
 #include <iomanip>
 #include <string>
 #include <vector>
 #include <iterator>
+#include <sstream>
+#include <fstream>
+#include <stdio.h>
+#include <stdlib.h>
 #include <algorithm>
 #include <ctime>
 #include <fstream>
+#include <random>
+#include <chrono>
 
 using std::cout;
 using std::cin;
@@ -21,19 +28,20 @@ using std::ifstream;
 struct data
 {
 	string vard{}, pav{};
-	int paz[5]{}, egz{};
+	int paz[20]{}, egz{};
 	double vidrezult{}, medrezult{};
 };
+
+const char CDfv[] = "kursiokai.txt";
 
 //---
 void ivestis(data& a, int& n);
 void galutinisvid(data& a, int& n);
 void galutinismed(data& a, int& n);
-void rikiavimas(data& a, int n, vector<data>& sarasas);
+bool rikiavimas(const data& a, const data& b);
 void rezultatai(data& a);
 //---
 
-const char CDfv[] = "kursiokai.txt";
 
 int main()
 {
@@ -43,75 +51,124 @@ int main()
 	string anw; // ats: apie dar vieno studento duomenu vedima
 	string anw2; //ats: ar skaityti is failo
 	int n = 0; //kiekis pazymiu
+	int y = 0; //ar nuskaityti duomenis loop
+	int k = 0; //failo studentu kiekis
 
 	cout << "Ar nuskaityti studentu duomenys is failo? [y/n] "; cin >> anw2;
+	
+	ifstream fd(CDfv);
+
+
+	do {
+		if ((anw2 == "n") || (anw2 == "N"))
+		{
+			for (int i = 0; i < N; i++)
+			{
+				ivestis(laik, n);
+
+				galutinisvid(laik, n);
+
+				galutinismed(laik, n);
+
+				sarasas.push_back(laik);
+
+				cout << "Ar norite ivesti dar vieno studento duomenis: [y/n] "; cin >> anw;
+				if (anw != "y")
+				{
+					break;
+				}
+				else
+				{
+					N++;
+					sarasas.reserve(N);
+				}
+			}
+			y++;
+		}
+		else if ((anw2 == "y") || (anw2 == "Y"))
+		{
+				//----------------------------------------------------------------------
+				std::ifstream open_f("kursiokai.txt");
+				string tittle; //zodzio string
+				while (tittle != "Egz.") {
+					open_f >> tittle;
+					if (tittle == "Egz.") break;
+					else if (tittle.substr(0, 2) == "ND") {
+						n++;
+					}
+				}
+				while (open_f) {
+					if (!open_f.eof()) {
+
+						std::getline(open_f, laik.vard, ' ');
+						std::getline(open_f, laik.pav, ' ');
+
+						for (int i = 0; i < n; i++)
+						{
+							open_f>>laik.paz[i];
+						}
+						open_f >> laik.egz;
+
+						galutinisvid(laik, n);
+
+						galutinismed(laik, n);
+
+						sarasas.push_back(laik);
+						k++;
+						
+
+					}
+					else break;
+				}
+
+				open_f.close();
+				k = N;
+				sort(sarasas.begin(), sarasas.end(), rikiavimas);
+		   //------------------------------------------------------------------------
+				std::ofstream out_f("kursiokai_cop.txt");
+
+				out_f << std::left<< setw(20) << "Vardas" << "| ";
+				out_f << setw(20) << "Pavarde" << " | ";
+				out_f << setw(20) << "Galutinis (Vid.)" << " | ";
+				out_f << setw(20) << "Galutinis (Med.)" << endl;
+
+				for (const auto& el : sarasas) 
+				{
+					out_f << setw(20)<< el.vard << " | " << setw(20) << el.pav << " | ";
+	
+					out_f << setw(20) << setprecision(2) << fixed << el.vidrezult << " | ";
+
+					out_f << setw(20) << setprecision(2) << fixed << el.medrezult << endl;
+				}
+				out_f.close();
+
+				y++;
+		}
+		else
+		{
+			cout << "Ar nuskaityti studentu duomenys is failo? [y/n] "; cin >> anw2;
+		}
+	} while (y == 0);
+
+	
 
 	if ((anw2 == "n") || (anw2 == "N"))
 	{
-		for (int i = 0; i < N; i++)
-		{
-			ivestis(laik, n);
-
-			galutinisvid(laik, n);
-
-			galutinismed(laik, n);
-
-			sarasas.push_back(laik);
-
-			cout << "Ar norite ivesti dar vieno studento duomenis: [y/n] "; cin >> anw;
-			if (anw != "y")
-			{
-				break;
-			}
-			else if (anw == "y")
-			{
-				N++;
-				sarasas.reserve(N);
-			}
-		}
-	}
-	else if ((anw2 == "y") || (anw2 == "Y"))
-	{	
-		ifstream fd(CDfv);
-		
-		for (int i = 0; i < 3; i++)
-		{
-
-				fd >> laik.vard >> laik.pav;
-				for (int i = 0; i < 5; i++)
-				{
-					fd >> laik.paz[i];
-				}
-				fd >> laik.egz;
-				n = 5;
-
-			galutinisvid(laik, n);
-
-			galutinismed(laik, n);
-
-			sarasas.push_back(laik);
-			N++;
-			sarasas.reserve(N);
-
-		}
-
-	}
-
-	rikiavimas(laik, n, sarasas);
-	
-		cout << setw(20) << "Vardas";
-		cout << setw(20) << "Pavarde";
-		cout << setw(20) << "Galutinis (Vid.)";
+		sort(sarasas.begin(), sarasas.end(), rikiavimas);
+		cout << setw(20) << "Vardas" << " | ";
+		cout << setw(20) << "Pavarde" << " | ";
+		cout << setw(20) << "Galutinis (Vid.)" << " | ";
 		cout << setw(20) << "Galutinis (Med.)" << endl;
-		cout << endl;
+		cout << setw(23) << " | " << setw(23) << " | " << setw(23) << " | " << endl;
+
 		for (int i = 0; i < sarasas.size(); i++)
 		{
 			rezultatai(sarasas[i]);
 		}
+	}
 
 		sarasas.clear();
 }
-
 void ivestis(data& a, int& n)
 {
 	string anw; //ats: suvesti ar generuoti pazymius
@@ -127,7 +184,7 @@ void ivestis(data& a, int& n)
 	do
 	{
 
-		if ((anw == "n")||(anw == "N"))
+		if ((anw == "n") || (anw == "N"))
 		{
 			n = 1;
 			cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [s] " << endl;
@@ -136,7 +193,7 @@ void ivestis(data& a, int& n)
 			{
 				cout << "Iveskite " << i + 1 << " pazymi: ";
 				cin >> x;
-				if ((x == 's')||(x == 'S'))//jei iveda [s]
+				if ((x == 's') || (x == 'S'))//jei iveda [s]
 				{
 					if (n > 1) //daugiau nebegalima vesti pazymiu
 					{
@@ -168,29 +225,27 @@ void ivestis(data& a, int& n)
 
 			y++;
 		}
-		else if ((anw == "y")|| (anw =="Y"))
+		else if ((anw == "y") || (anw == "Y"))
 		{
-			n = rand() % 10 + 1;
+			using hrClock = std::chrono::high_resolution_clock;
+			std::mt19937 mt(static_cast<long unsigned int>(hrClock::now().time_since_epoch().count()));
+			std::uniform_int_distribution<int> dist(1, 10);
 
-			srand(time(0));
+			n = dist(mt);
 
-			for (int i = 0; i < n; i++)
-			{
-				a.paz[i] = rand() % 10 + 1;
+			for (int i = 0; i < n; i++) {
+				a.paz[i] == dist(mt);
 			}
 
-			a.egz = rand() % 10 + 1;
+			a.egz = dist(mt);
 
 			y++;
 		}
 		else
 		{
-			cout << "Suvesti ar atsitiktinai generuoti pazymius? [suvesti/generuoti] "; cin >> anw; //jei nebuvo irasyta suvesti/generuoti
+			cout << "Suvesti ar atsitiktinai generuoti pazymius? [y/n] "; cin >> anw; //jei nebuvo irasyta suvesti/generuoti
 		}
 	} while (y == 0);
-
-
-
 
 }
 void galutinisvid(data& a, int& n) //su vidurkiu
@@ -224,44 +279,15 @@ void galutinismed(data& a, int& n)//su mediana
 	a.medrezult = 0.4 * med + 0.6 * a.egz;
 
 }
-void rikiavimas(data& a, int n, vector<data>& sarasas)
-{
-	string tempvard = sarasas[0].vard;
-	string temppav = sarasas[0].pav;
-	double tempvid = sarasas[0].vidrezult;
-	double tempmed = sarasas[0].medrezult;
-
-	for (int i = 0; i < 3; i++)
-	{
-		for (int j = 0; j < 3; j++)
-		{
-			if (sarasas[i].vard <= tempvard)
-			{
-				tempvard = sarasas[i].vard;
-				sarasas[i].vard = sarasas[j].vard;
-				sarasas[j].vard = tempvard;
-
-				temppav = sarasas[i].pav;
-				sarasas[i].pav = sarasas[j].pav;
-				sarasas[j].pav = temppav;
-
-				tempvid = sarasas[i].vidrezult;
-				sarasas[i].vidrezult = sarasas[j].vidrezult;
-				sarasas[j].vidrezult = tempvid;
-
-				tempmed = sarasas[i].medrezult;
-				sarasas[i].medrezult = sarasas[j].medrezult;
-				sarasas[j].medrezult = tempmed;
-			}
-		}
-	}
-
-}
 void rezultatai(data& a)
 {
-	cout << setw(20) << a.vard << setw(20) << a.pav;
-	
-	cout << setw(20) << setprecision(2) << fixed << a.vidrezult;
+	cout << setw(20) << a.vard << " | " << setw(20) << a.pav << " | ";
+
+	cout << setw(20) << setprecision(2) << fixed << a.vidrezult << " | ";
 
 	cout << setw(20) << setprecision(2) << fixed << a.medrezult << endl;
+}
+bool rikiavimas(const data& a, const data& b)
+{
+	return a.vard < b.vard;
 }
