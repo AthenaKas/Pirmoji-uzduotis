@@ -5,14 +5,12 @@
 #include <vector>
 #include <iterator>
 #include <algorithm>
-#include <ctime>
 #include <fstream>
 #include <random>
 #include <chrono>
 #include <sstream>
-#include <fstream>
-#include <stdio.h>
-#include <stdlib.h>
+//#include <stdio.h>
+//#include <stdlib.h>
 
 using std::cout;
 using std::cin;
@@ -24,8 +22,6 @@ using std::fixed;
 using std::sort;
 using std::vector;
 using std::ifstream;
-
-
 
 struct data
 {

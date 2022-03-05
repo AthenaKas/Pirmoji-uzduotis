@@ -79,37 +79,6 @@ void ivestis(data& a, int& n)
 	} while (y == 0);
 
 }
-void galutinisvid(data& a, int& n) //su vidurkiu
-{
-	double vid = 0;
-	int suma = 0;
-
-	for (int i = 0; i < n; i++)
-	{
-		suma += a.paz[i];
-	}
-
-	vid = suma / (double)(n);
-
-	a.vidrezult = 0.4 * vid + 0.6 * a.egz;
-}
-void galutinismed(data& a, int& n)//su mediana
-{
-	double med;
-	sort(a.paz, a.paz + n);
-
-	if (n % 2 != 0)
-	{
-		med = (double)a.paz[n / 2];
-	}
-	else
-	{
-		med = (double)(a.paz[(n - 1) / 2] + a.paz[n / 2]) / 2;
-	}
-
-	a.medrezult = 0.4 * med + 0.6 * a.egz;
-
-}
 void rezultatai(data& a)
 {
 	cout << setw(20) << a.vard << " | " << setw(20) << a.pav << " | ";
