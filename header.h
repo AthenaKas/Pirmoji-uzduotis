@@ -9,8 +9,9 @@
 #include <random>
 #include <chrono>
 #include <sstream>
-//#include <stdio.h>
-//#include <stdlib.h>
+//
+#include <stdio.h>
+#include <stdlib.h>
 
 using std::cout;
 using std::cin;
