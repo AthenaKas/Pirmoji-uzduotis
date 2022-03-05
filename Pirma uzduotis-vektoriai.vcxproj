@@ -140,10 +140,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="funkcijos.cpp" />
+    <ClCompile Include="mediana.cpp" />
     <ClCompile Include="Source-vektoriai.cpp" />
+    <ClCompile Include="vidurkis.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h" />
+    <ClInclude Include="Hvid_med.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -21,9 +21,18 @@
     <ClCompile Include="funkcijos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mediana.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vidurkis.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hvid_med.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
