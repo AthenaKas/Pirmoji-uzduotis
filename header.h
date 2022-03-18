@@ -37,7 +37,6 @@ void galutinisvid(data& a, int& n);
 void galutinismed(data& a, int& n);
 bool rikiavimas(const data& a, const data& b);
 void rezultatai(data& a);
-void isvedimas(data& a);
 //---
 
 const char CDfv[] = "kursiokai.txt";

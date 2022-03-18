@@ -12,6 +12,7 @@ int main()
 	int n = 0; //kiekis pazymiu
 	int y = 0; //ar nuskaityti duomenis loop
 	int k = 0; //failo studentu kiekis
+	int p, s;
 
 
 	cout << "Ar nuskaityti studentu duomenys is failo ? [1]" << endl;
@@ -136,30 +137,31 @@ int main()
 			std::uniform_int_distribution<int> dist(1, 10);
 			//---
 			std::stringstream my_buffer;
-			int n, m;
+			//int p, s;
 			string var = "Vardas", pav = "Pavarde";
 			string nd = "ND", egz = "Egz.";
 
-			cout << "Kiek pazymiu tures studentas? "; cin >> n;
-			cout << "Kiek studentu bus? "; cin >> m;
+			cout << "Kiek pazymiu tures studentas? "; cin >> p;
+			cout << "Kiek studentu bus? "; cin >> s;
 
 			my_buffer << var << " " << pav << " ";
-			for (int i = 0; i < n; i++)
+			for (int i = 0; i < p; i++)
 			{
 				my_buffer << nd << i + 1<<" ";
 			}
 			my_buffer << egz << endl;
 
-			for (long long int i = 0; i < m; i++)
+			for (long long int i = 0; i < s; i++)
 			{
 				my_buffer << var <<i+1<< " " << pav <<i+1<<" ";
-				for (int j = 0; j < n; j++) my_buffer << dist(mt) <<" "; //pazymiai
+				for (int j = 0; j < p; j++) my_buffer << dist(mt) <<" "; //pazymiai
 				my_buffer << dist(mt) << endl; //egz paz;
 			}
 
 			std::ofstream out_f("sugeneruotas.txt");
 			out_f << my_buffer.str();
 			out_f.close();
+			my_buffer.clear();
 			
 			y++;
 		}
@@ -174,7 +176,9 @@ int main()
 
 	if (Ranw == "3")
 	{
+
 		std::ifstream open_f("sugeneruotas.txt");
+	
 		string tittle; //zodzio string
 		while (tittle != "Egz.") {
 			open_f >> tittle;
@@ -183,13 +187,17 @@ int main()
 				n++;
 			}
 		}
+
+		cout << n << endl;
+			
+		        
 		while (open_f) {
 			if (!open_f.eof()) {
 
 				std::getline(open_f, laik.vard, ' ');
 				std::getline(open_f, laik.pav, ' ');
 
-				for (int i = 0; i < n; i++)
+				for (int i = 0; i < p; i++)
 				{
 					open_f >> laik.paz[i];
 				}
@@ -200,8 +208,6 @@ int main()
 				galutinismed(laik, n);
 
 				sarasas.push_back(laik);
-				k++;
-				
 
 			}
 			else break;
@@ -209,7 +215,6 @@ int main()
 		
 		open_f.close();
 
-		k = N;
 		sort(sarasas.begin(), sarasas.end(), rikiavimas);
 		//------------------------------------------------------------------------
 		std::ofstream out_f("sugeneruotas_cop.txt");
@@ -219,9 +224,13 @@ int main()
 		out_f << setw(20) << "Galutinis (Vid.)" << " | ";
 		out_f << setw(20) << "Galutinis (Med.)" << endl;
 		out_f << "-----------------------------------------------------------------------------------------------------";
-		for (int i = 0; i < sarasas.size()-1; i++)
+		for (int i = 1; i < sarasas.size(); i++)
 		{
-			isvedimas(sarasas[i]);
+			out_f << setw(20) << sarasas[i].vard << " | " << setw(20) << sarasas[i].pav << " | ";
+
+			out_f << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
+
+			out_f << setw(20) << setprecision(2) << fixed << sarasas[i].medrezult;
 		}
 		out_f.close();
 	}

@@ -91,14 +91,3 @@ bool rikiavimas(const data& a, const data& b)
 {
 	return a.vard < b.vard;
 }
-void isvedimas(data& a)
-{
-	std::ofstream out_f("sugeneruotas_cop.txt");
-	
-		out_f << setw(20) << a.vard << " | " << setw(20) << a.pav << " | ";
-
-		out_f << setw(20) << setprecision(2) << fixed << a.vidrezult << " | ";
-
-		out_f << setw(20) << setprecision(2) << fixed << a.medrezult;
-	
-}
