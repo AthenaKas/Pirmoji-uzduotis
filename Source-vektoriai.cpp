@@ -188,9 +188,8 @@ int main()
 			}
 		}
 
-		cout << n << endl;
-			
-		        
+		sarasas.reserve(s);
+
 		while (open_f) {
 			if (!open_f.eof()) {
 
@@ -205,7 +204,7 @@ int main()
 
 				galutinisvid(laik, n);
 
-				galutinismed(laik, n);
+				//galutinismed(laik, n);
 
 				sarasas.push_back(laik);
 
@@ -217,21 +216,39 @@ int main()
 
 		sort(sarasas.begin(), sarasas.end(), rikiavimas);
 		//------------------------------------------------------------------------
-		std::ofstream out_f("sugeneruotas_cop.txt");
-
+		std::ofstream out_f("vargsiukai.txt");
 		out_f << std::left << setw(20) << "Vardas" << "| ";
 		out_f << setw(20) << "Pavarde" << " | ";
-		out_f << setw(20) << "Galutinis (Vid.)" << " | ";
-		out_f << setw(20) << "Galutinis (Med.)" << endl;
+		out_f << setw(20) << "Galutinis (Vid.)" << endl;
 		out_f << "-----------------------------------------------------------------------------------------------------";
+
+		std::ofstream out_k("kietiakiai.txt");
+		out_k << std::left << setw(20) << "Vardas" << "| ";
+		out_k << setw(20) << "Pavarde" << " | ";
+		out_k << setw(20) << "Galutinis (Vid.)" << endl;
+		out_k << "-----------------------------------------------------------------------------------------------------";
+
 		for (int i = 1; i < sarasas.size(); i++)
 		{
-			out_f << setw(20) << sarasas[i].vard << " | " << setw(20) << sarasas[i].pav << " | ";
 
-			out_f << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
+			if (sarasas[i].vidrezult < 5.0)
+			{
+				
+					out_f << setw(20) << sarasas[i].vard << " | " << setw(20) << sarasas[i].pav << " | ";
 
-			out_f << setw(20) << setprecision(2) << fixed << sarasas[i].medrezult;
+					out_f << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
+
+			}
+			else if (sarasas[i].vidrezult >= 5.0)
+			{
+			
+					out_k << setw(20) << sarasas[i].vard << " | " << setw(20) << sarasas[i].pav << " | ";
+
+					out_k << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
+				
+			}
 		}
+		out_k.close();
 		out_f.close();
 	}
 
