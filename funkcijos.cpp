@@ -15,7 +15,7 @@ void ivestis(data& a, int& n)
 	do
 	{
 
-		if ((anw == "n") || (anw == "N"))
+		if ((anw == "n") || (anw == "N")) //rankiniu budu ivedami pazymiai
 		{
 			n = 1;
 			cout << "Iveskite nuo 1 iki 10 pazymiu, kai nusprendziate, kad pazymiu uztenka rasykite: [s] " << endl;
@@ -56,7 +56,7 @@ void ivestis(data& a, int& n)
 
 			y++;
 		}
-		else if ((anw == "y") || (anw == "Y"))
+		else if ((anw == "y") || (anw == "Y"))//generuoja atsitinktinai pazymiai
 		{
 			using hrClock = std::chrono::high_resolution_clock;
 			std::mt19937 mt(static_cast<long unsigned int>(hrClock::now().time_since_epoch().count()));
@@ -74,7 +74,7 @@ void ivestis(data& a, int& n)
 		}
 		else
 		{
-			cout << "Suvesti ar atsitiktinai generuoti pazymius? [y/n] "; cin >> anw; //jei nebuvo irasyta suvesti/generuoti
+			cout << "Ar atsitiktinai generuoti pazymius? [y/n] "; cin >> anw;
 		}
 	} while (y == 0);
 
