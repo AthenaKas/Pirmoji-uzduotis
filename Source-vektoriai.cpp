@@ -4,7 +4,8 @@
 
 int main()
 {
-	int N = 1;
+	Timer t;
+	long long int N = 1;
 	vector<data> sarasas;
 	data laik;
 	string anw; // ats: apie dar vieno studento duomenu vedima
@@ -131,6 +132,7 @@ int main()
 		}
 		else if (Ranw == "3") //failo generacija
 		{
+			Timer t1;
 			//---
 			using hrClock = std::chrono::high_resolution_clock;
 			std::mt19937 mt(static_cast<long unsigned int>(hrClock::now().time_since_epoch().count()));
@@ -163,6 +165,8 @@ int main()
 			out_f.close();
 			my_buffer.clear();
 			
+			cout << "Failo kurimas ir jo uzdarimas " << t1.elapsed() <<" s"<<endl;
+
 			y++;
 		}
 		else
@@ -176,7 +180,7 @@ int main()
 
 	if (Ranw == "3")
 	{
-
+		Timer t2;
 		std::ifstream open_f("sugeneruotas.txt");
 	
 		string tittle; //zodzio string
@@ -187,32 +191,37 @@ int main()
 				n++;
 			}
 		}
-
-		sarasas.reserve(s);
-
+		
+		
 		while (open_f) {
 			if (!open_f.eof()) {
 
 				std::getline(open_f, laik.vard, ' ');
 				std::getline(open_f, laik.pav, ' ');
-
+				int suma = 0;
 				for (int i = 0; i < p; i++)
 				{
 					open_f >> laik.paz[i];
+					suma += laik.paz[i];
+
 				}
 				open_f >> laik.egz;
 
-				galutinisvid(laik, n);
+				int vid = 0;
+				vid = suma / (double)(p);
 
-				//galutinismed(laik, n);
+				laik.vidrezult = 0.4 * vid + 0.6 * laik.egz;
 
 				sarasas.push_back(laik);
-
+				N++;
+				sarasas.reserve(N);
+				
 			}
 			else break;
 		}
 		
 		open_f.close();
+		cout<<"Duomenu nuskaitymas is failo ir galutinio pazymio suskaiciavimas: "<<t2.elapsed() << " s"<<endl;
 
 		sort(sarasas.begin(), sarasas.end(), rikiavimas);
 		//------------------------------------------------------------------------
@@ -227,6 +236,8 @@ int main()
 		out_k << setw(20) << "Pavarde" << " | ";
 		out_k << setw(20) << "Galutinis (Vid.)" << endl;
 		out_k << "-----------------------------------------------------------------------------------------------------";
+
+		Timer t3;
 
 		for (int i = 1; i < sarasas.size(); i++)
 		{
@@ -250,6 +261,7 @@ int main()
 		}
 		out_k.close();
 		out_f.close();
+		cout << "Surusiuotu studentu isvedimas i du naujus failus: " <<t3.elapsed() << " s" <<endl;
 	}
 
 	
@@ -270,4 +282,6 @@ int main()
 	}
 
 		sarasas.clear();
+
+		cout << "Visosprogramos veikimas " << t.elapsed() << " s" << endl;
 }
