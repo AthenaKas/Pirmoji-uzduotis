@@ -213,8 +213,6 @@ int main()
 				laik.vidrezult = 0.4 * vid + 0.6 * laik.egz;
 
 				sarasas.push_back(laik);
-				/*N++;
-				sarasas.reserve(N);*/
 				
 			}
 			else break;
@@ -257,6 +255,10 @@ int main()
 
 					out_k << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
 				
+			}
+			else
+			{
+				out_k << "mhm" << endl;
 			}
 		}
 		out_k.close();
