@@ -213,8 +213,8 @@ int main()
 				laik.vidrezult = 0.4 * vid + 0.6 * laik.egz;
 
 				sarasas.push_back(laik);
-				N++;
-				sarasas.reserve(N);
+				/*N++;
+				sarasas.reserve(N);*/
 				
 			}
 			else break;
@@ -283,5 +283,5 @@ int main()
 
 		sarasas.clear();
 
-		cout << "Visosprogramos veikimas " << t.elapsed() << " s" << endl;
+		cout << "Visos programos veikimas " << t.elapsed() << " s" << endl;
 }
