@@ -36,6 +36,4 @@ Programa išvedą studentų vardus ir pavardes bei studentų galutinius pažymiu
 
            
 4. Sistemos parametrai:
- 1.CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz
- 2. RAM - 2x8 GB RAM
- 3. SSD - 500GB
+CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
