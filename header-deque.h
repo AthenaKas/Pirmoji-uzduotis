@@ -9,6 +9,7 @@
 #include <random>
 #include <chrono>
 #include <sstream>
+#include <deque>
 //
 #include <stdio.h>
 #include <stdlib.h>
@@ -24,6 +25,7 @@ using std::sort;
 using std::vector;
 using std::ifstream;
 using std::to_string;
+using std::deque;
 
 struct data
 {
@@ -38,8 +40,8 @@ void galutinisvid(data& a, int& n);
 void galutinismed(data& a, int& n);
 bool rikiavimas(const data& a, const data& b);
 void rezultatai(data& a);
-void fskaitymas(data& a, int& n, vector<data>& sarasas, vector<data>& kietiakai, vector<data>& vargsiukai);
-void firasimas(data& a, int& n, vector<data>& sarasas);
+void fskaitymas(data& a, int& n, deque<data>& sarasas, deque<data>& kietiakai, deque<data>& vargsiukai);
+void firasimas(data& a, int& n, deque<data>& sarasas);
 void generacija(std::stringstream& my_buffer, int& n, int& s);
 
 //---

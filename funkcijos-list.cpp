@@ -91,7 +91,7 @@ bool rikiavimas(const data& a, const data& b)
 {
 	return a.vard < b.vard;
 }
-void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, vector<data>& vargsiukai)
+void fskaitymas(data&a, int& n, list<data>& sarasas, list<data>& kietiakai, list<data>& vargsiukai)
 {
 	//----------------------------------------------------------------------
 	int r;
@@ -140,19 +140,20 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 		cout << "Duomenu nuskaitymas is failo ir galutinio pazymio suskaiciavimas: " << t2.elapsed() << " s" << endl;
 		//cout << z << endl;
 
-		sort(sarasas.begin(), sarasas.end(), rikiavimas);
+		sarasas.sort([](data a, data b) {
+			return a.vard > b.vard; });
 
 		Timer t1;
-		for (int i = 0; i < sarasas.size() - 1; i++)
+		for (const auto& elem : sarasas)
 		{
 
-			if (sarasas[i].vidrezult < 5.0)
+			if (elem.vidrezult < 5.0)
 			{
-				vargsiukai.push_back(sarasas[i]);
+				vargsiukai.push_back(elem);
 			}
-			else if (sarasas[i].vidrezult >= 5.0)
+			else if (elem.vidrezult >= 5.0)
 			{
-				kietiakai.push_back(sarasas[i]);
+				kietiakai.push_back(elem);
 			}
 		}
 		cout << "Studentu isskirstymas i du vektorius: " << t1.elapsed() << " s" << endl;
@@ -171,19 +172,19 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 		out_k << "-----------------------------------------------------------------------------------------------------";
 
 		Timer t3;
-		for (int i = 1; i < vargsiukai.size(); i++)
+		for (const auto& elem : vargsiukai)
 		{
-			out_f << setw(20) << vargsiukai[i].vard << " | " << setw(20) << vargsiukai[i].pav << " | ";
+			out_f << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
 
-			out_f << setw(20) << setprecision(2) << fixed << vargsiukai[i].vidrezult << " | ";
+			out_f << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
 
 		}
-		for (int i = 1; i < kietiakai.size(); i++)
+		for (const auto& elem: kietiakai)
 		{
 
-			out_k << setw(20) << kietiakai[i].vard << " | " << setw(20) << kietiakai[i].pav << " | ";
+			out_k << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
 
-			out_k << setw(20) << setprecision(2) << fixed << kietiakai[i].vidrezult << " | ";
+			out_k << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
 
 		}
 		out_k.close();
@@ -224,7 +225,7 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 
 	//sort(sarasas.begin(), sarasas.end(), rikiavimas);
 }
-void firasimas(data& a, int& n, vector<data>& sarasas)
+void firasimas(data& a, int& n, list<data>& sarasas)
 {
 	std::ofstream out_f("kursiokai_cop.txt");
 
@@ -234,13 +235,13 @@ void firasimas(data& a, int& n, vector<data>& sarasas)
 	out_f << setw(20) << "Galutinis (Med.)" << endl;
 	out_f << "-----------------------------------------------------------------------------------------------------";
 
-	for (int i = 0; i < sarasas.size(); i++) //ispauzdinimas i faila
+	for (const auto& elem : sarasas) //ispauzdinimas i faila
 	{
-		out_f << setw(20) << sarasas[i].vard << " | " << setw(20) << sarasas[i].pav << " | ";
+		out_f << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
 
-		out_f << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
+		out_f << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
 
-		out_f << setw(20) << setprecision(2) << fixed << sarasas[i].medrezult;
+		out_f << setw(20) << setprecision(2) << fixed << elem.medrezult;
 	}
 	out_f.close();
 

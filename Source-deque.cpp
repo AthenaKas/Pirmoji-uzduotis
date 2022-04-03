@@ -6,10 +6,9 @@ int main()
 {
 	Timer t;
 	long long int N = 1;
-	vector<data> sarasas;
-	vector<data> vargsiukai;
-	vector<data> kietiakai;
-	vector<data> mokinys[100];
+	deque<data> sarasas;
+	deque<data> vargsiukai;
+	deque<data> kietiakai;
 	data laik;
 	string anw; // ats: apie dar vieno studento duomenu vedima
 	string Ranw; //ats: duomenu gavimo pasirinkimas
@@ -53,7 +52,7 @@ int main()
 		{
 			for (int i = 0; i < N; i++)
 			{
-				ivestis(laik, n);
+				/*ivestis(laik, n);
 
 				galutinisvid(laik, n);
 
@@ -70,7 +69,7 @@ int main()
 				{
 					N++;
 					sarasas.reserve(N);
-				}
+				}*/
 			}
 			y++;
 		}
@@ -226,8 +225,6 @@ int main()
 	}
 
 		sarasas.clear();
-		vargsiukai.clear();
-		kietiakai.clear();
 
 		cout << "Visos programos veikimas " << t.elapsed() << " s" << endl;
 }

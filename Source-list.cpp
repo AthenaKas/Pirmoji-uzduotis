@@ -6,10 +6,9 @@ int main()
 {
 	Timer t;
 	long long int N = 1;
-	vector<data> sarasas;
-	vector<data> vargsiukai;
-	vector<data> kietiakai;
-	vector<data> mokinys[100];
+	list<data> sarasas;
+	list<data> vargsiukai;
+	list<data> kietiakai;
 	data laik;
 	string anw; // ats: apie dar vieno studento duomenu vedima
 	string Ranw; //ats: duomenu gavimo pasirinkimas
@@ -53,7 +52,7 @@ int main()
 		{
 			for (int i = 0; i < N; i++)
 			{
-				ivestis(laik, n);
+				/*ivestis(laik, n);
 
 				galutinisvid(laik, n);
 
@@ -70,7 +69,7 @@ int main()
 				{
 					N++;
 					sarasas.reserve(N);
-				}
+				}*/
 			}
 			y++;
 		}
@@ -78,7 +77,7 @@ int main()
 		{
 			fskaitymas(laik, n, sarasas, kietiakai, vargsiukai);
 
-			firasimas(laik, n, sarasas);
+			//firasimas(laik, n, sarasas);
 				y++;
 		}
 		else if (Ranw == "3") //failo generacija
@@ -150,19 +149,23 @@ int main()
 				cout << "Duomenu nuskaitymas is failo ir galutinio pazymio suskaiciavimas: " << t2.elapsed() << " s" << endl;
 				//cout << z << endl;
 
-				sort(sarasas.begin(), sarasas.end(), rikiavimas);
+				sarasas.sort([](data a, data b) {
+					return a.vard > b.vard;
+					});
 
+			sarasas.reverse();
 				Timer t1;
-				for (int i = 0; i < sarasas.size() - 1; i++)
+
+				for (const auto& elem: sarasas)
 				{
 
-					if (sarasas[i].vidrezult < 5.0)
+					if (elem.vidrezult < 5.0)
 					{
-						vargsiukai.push_back(sarasas[i]);
+						vargsiukai.push_back(elem);
 					}
-					else if (sarasas[i].vidrezult >= 5.0)
+					else if (elem.vidrezult >= 5.0)
 					{
-						kietiakai.push_back(sarasas[i]);
+						kietiakai.push_back(elem);
 					}
 				}
 				cout << "Studentu isskirstymas i du vektorius: " << t1.elapsed() << " s" << endl;
@@ -181,19 +184,26 @@ int main()
 			out_k << "-----------------------------------------------------------------------------------------------------";
 
 			Timer t3;
-			for (int i = 1; i < vargsiukai.size(); i++)
+			for (const auto& elem : vargsiukai)
 			{
-					out_f << setw(20) << vargsiukai[i].vard << " | " << setw(20) << vargsiukai[i].pav << " | ";
+				
+			
+					out_f << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
 
-					out_f << setw(20) << setprecision(2) << fixed << vargsiukai[i].vidrezult << " | ";
+					out_f << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
+
+				
 
 			}
-			for (int i = 1; i < kietiakai.size(); i++)
+			for (const auto& elem : kietiakai)
 			{
+				
+				
+					out_k << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
 
-				out_k << setw(20) << kietiakai[i].vard << " | " << setw(20) << kietiakai[i].pav << " | ";
-
-				out_k << setw(20) << setprecision(2) << fixed << kietiakai[i].vidrezult << " | ";
+					out_k << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
+				
+				
 
 			}
 			out_k.close();
@@ -212,7 +222,7 @@ int main()
 
 	if (Ranw == "2") //isvedimas rankinio budo
 	{
-		sort(sarasas.begin(), sarasas.end(), rikiavimas);
+		//sort(sarasas.begin(), sarasas.end(), rikiavimas);
 		cout << setw(20) << "Vardas" << " | ";
 		cout << setw(20) << "Pavarde" << " | ";
 		cout << setw(20) << "Galutinis (Vid.)" << " | ";
@@ -221,13 +231,11 @@ int main()
 
 		for (int i = 0; i < sarasas.size(); i++)
 		{
-			rezultatai(sarasas[i]);
+			//rezultatai(sarasas[i]);
 		}
 	}
 
 		sarasas.clear();
-		vargsiukai.clear();
-		kietiakai.clear();
 
 		cout << "Visos programos veikimas " << t.elapsed() << " s" << endl;
 }

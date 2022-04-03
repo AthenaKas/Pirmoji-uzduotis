@@ -91,7 +91,7 @@ bool rikiavimas(const data& a, const data& b)
 {
 	return a.vard < b.vard;
 }
-void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, vector<data>& vargsiukai)
+void fskaitymas(data&a, int& n, deque<data>& sarasas, deque<data>& kietiakai, deque<data>& vargsiukai)
 {
 	//----------------------------------------------------------------------
 	int r;
@@ -224,7 +224,7 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 
 	//sort(sarasas.begin(), sarasas.end(), rikiavimas);
 }
-void firasimas(data& a, int& n, vector<data>& sarasas)
+void firasimas(data& a, int& n, deque<data>& sarasas)
 {
 	std::ofstream out_f("kursiokai_cop.txt");
 
