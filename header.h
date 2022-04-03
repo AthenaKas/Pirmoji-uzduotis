@@ -23,6 +23,7 @@ using std::fixed;
 using std::sort;
 using std::vector;
 using std::ifstream;
+using std::to_string;
 
 struct data
 {
@@ -37,9 +38,14 @@ void galutinisvid(data& a, int& n);
 void galutinismed(data& a, int& n);
 bool rikiavimas(const data& a, const data& b);
 void rezultatai(data& a);
+void fskaitymas(data& a, int& n, vector<data>& sarasas, vector<data>& kietiakai, vector<data>& vargsiukai);
+void firasimas(data& a, int& n, vector<data>& sarasas);
+void generacija(std::stringstream& my_buffer, int& n, int& s);
+
 //---
 
 const char CDfv[] = "kursiokai.txt";
+
 
 class Timer {
 private:
