@@ -38,6 +38,9 @@ KIEKIS   | F!KŪRIMAS | F!NUSKAITYMAS IR SKAIČIAVIMAI | SUSKIRSTYMAS/RŪŠIAVIM
 1. Buvo sukurtos trys atskiros programos su trijais skirtingais konteineriais: vector, list, deque.
 2. Buvo atlikti laiko matavymai šių trijų konteinerių spartumo.
 3. Laiko matavimai:
+<img width="472" alt="5" src="https://user-images.githubusercontent.com/99173750/161427791-2aa6fcce-2c4d-4d1b-b3e5-b70b0de01c25.png">
+
+
 KONTEINERIS | KIEKIS   | F!NUSKAITYMAS IR SKAIČIAVIMAI | SUSKIRSTYMAS/RŪŠIAVIMAS Į VEKTORIUS
  Vector     | 1000     | 0.002s                        | 0.00014s                 
             | 10000    | 0.017s                        | 0.00227s                
