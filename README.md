@@ -49,7 +49,7 @@ CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
 ## Šeštoji užduotis v1.0
 Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
 1. Buvo ištestuotos 2 strategijos - vector, deque, list konteineriams
-<img width="296" alt="image" src="https://user-images.githubusercontent.com/99173750/163682620-919d9cf6-a9f6-4ba7-97bf-6b2f641d2f6c.png">
+<img width="334" alt="image" src="https://user-images.githubusercontent.com/99173750/163687457-6330c15b-7cc7-4e86-941a-a13728880386.png">
 Analizė:
 1 strategija greitesnė - Vector ir Deque konteineriais;
 2 strategija greitesnė - List konteineriu;
