@@ -33,6 +33,9 @@ Programa išvedą studentų vardus ir pavardes bei studentų galutinius pažymiu
 2. Buvo atlikti laiko matavymai šių trijų konteinerių spartumo.
 3. Laiko matavimai:
 <img width="472" alt="5" src="https://user-images.githubusercontent.com/99173750/161427791-2aa6fcce-2c4d-4d1b-b3e5-b70b0de01c25.png">
+Analizė: 
+Greičiausias uskirstymas studentu į skirtingus konteinerius - Deque;
+Greičiausias failo nuskaitymas ir suskaičiavimas - List;
 4. Sistemos parametrai:
 CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
 
@@ -40,5 +43,8 @@ CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
 Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
 1. Buvo ištestuotos 2 strategijos - vector, deque, list konteineriams
 <img width="296" alt="image" src="https://user-images.githubusercontent.com/99173750/163682620-919d9cf6-a9f6-4ba7-97bf-6b2f641d2f6c.png">
+Analizė:
+1 strategija greitesnė - Vector ir Deque konteineriais;
+2 strategija greitesnė - List konteineriu;
 2. Pritaikyti algoritmai studentų dalijimo procedūrai paspartinti (vector - konteinerio).
 
