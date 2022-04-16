@@ -1,5 +1,12 @@
 # UŽDUOTIS
 
+##INSTRUKCIJA
+
+Vartotojas turi 3 pasirinkimus:
+1. Nuskaityti studentų duomenis iš failo;
+2. Įvesti duomenis rankiniu būdu: Įvesti vardą, pavardę, pasirinkti ar pažymius vesti rankiniu būdu ar sugeneruoti;
+3. Sugeneruoti studentų duomenų failą: Pasirinkti ar nuskaityti failą ar ne;
+
 ## Pirmoji užduotis v0.1
 Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
 1. Vartotojas įvedą studento vardą ir pavardę. Studentų kiekis nėra ribojamas. Suvedus reikiamus duomenis apie studentą, vartotojas gauna užkalausą: "Ar norite ivesti dar vieno studento duomenis: [y/n]";
