@@ -33,7 +33,10 @@ Programa išvedą studentų vardus ir pavardes bei studentų galutinius pažymiu
 2. Buvo atlikti laiko matavymai šių trijų konteinerių spartumo.
 3. Laiko matavimai:
 <img width="472" alt="5" src="https://user-images.githubusercontent.com/99173750/161427791-2aa6fcce-2c4d-4d1b-b3e5-b70b0de01c25.png">
-
-           
 4. Sistemos parametrai:
 CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
+
+## Šeštoji užduotis v1.0
+Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
+1. Buvo ištestuotos 2 strategijos - vector, deque, list konteineriams
+2. Pritaikyti algoritmai studentų dalijimo procedūrai paspartinti (vector - konteinerio).
