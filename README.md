@@ -40,3 +40,21 @@ CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
 Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
 1. Buvo ištestuotos 2 strategijos - vector, deque, list konteineriams
 2. Pritaikyti algoritmai studentų dalijimo procedūrai paspartinti (vector - konteinerio).
+KONTEINERIS | KIEKIS   | 1 STRATEGIJA | 2 STRATEGIJA |
+Vector      | 1000     | 0.0002s      | 0.0044s      |
+            | 10000    | 0.0022s      | 0.0213s      |
+            | 100000   | 0.0266s      | 0.3164s      |
+            | 1000000  | 0.3210s      | 3.3060s      |
+            | 10000000 | 2.3910s      | 15.568s      |
+
+List        | 1000     | 0.0002s      | 0.0001s      |
+            | 10000    | 0.0038s      | 0.0013s      |
+            | 100000   | 0.0233s      | 0.0113s      |
+            | 1000000  | 0.3400s      | 0.1418s      |
+            | 10000000 | 1.9960s      | 0.9335s      |
+
+Deque       | 1000     | 0.0001s      | 0.0008s      |
+            | 10000    | 0.0021s      | 0.1458s      |
+            | 100000   | 0.0186s      | 27.503s      |
+            | 1000000  | 0.1758s      | -            |
+            | 10000000 | 1.7858s      | -            |
