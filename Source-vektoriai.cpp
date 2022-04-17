@@ -166,6 +166,25 @@ int main()
 					}
 				}
 				cout << "Studentu isskirstymas i du vektorius: " << t1.elapsed() << " s" << endl;
+				vargsiukai.clear();
+				//---
+				Timer t1v;
+
+				vector<data> ::iterator it; it = sarasas.begin(); sarasas.erase(it);
+				int x = 0;
+				for (int i = 0; i < sarasas.size(); i++)
+				{
+
+					if (sarasas[x].vidrezult < 5.0)
+					{
+						it = sarasas.begin() + x;
+						vargsiukai.push_back(sarasas[x]);
+						sarasas.erase(it);
+						x--;
+					}x++;
+
+				}
+				cout << "Studentu isskirstymas i viena vargsiuku vektoriu: " << t1v.elapsed() << " s" << endl;
 			
 			//------------------------------------------------------------------------
 			std::ofstream out_f("vargsiukai.txt");
@@ -179,6 +198,12 @@ int main()
 			out_k << setw(20) << "Pavarde" << " | ";
 			out_k << setw(20) << "Galutinis (Vid.)" << endl;
 			out_k << "-----------------------------------------------------------------------------------------------------";
+
+			std::ofstream out_s("sarasas.txt");
+			out_s << std::left << setw(20) << "Vardas" << "| ";
+			out_s << setw(20) << "Pavarde" << " | ";
+			out_s << setw(20) << "Galutinis (Vid.)" << endl;
+			out_s << "-----------------------------------------------------------------------------------------------------";
 
 			Timer t3;
 			for (int i = 1; i < vargsiukai.size(); i++)
@@ -196,8 +221,17 @@ int main()
 				out_k << setw(20) << setprecision(2) << fixed << kietiakai[i].vidrezult << " | ";
 
 			}
+			for (int i = 1; i < sarasas.size(); i++)
+			{
+
+				out_s << setw(20) << sarasas[i].vard << " | " << setw(20) << sarasas[i].pav << " | ";
+
+				out_s << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
+
+			}
 			out_k.close();
 			out_f.close();
+			out_s.close();
 			cout << "Studentu isvedimas i du naujus failus: " << t3.elapsed() << " s" << endl;
 			
 		}
