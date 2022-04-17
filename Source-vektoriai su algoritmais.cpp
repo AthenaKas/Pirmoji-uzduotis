@@ -18,6 +18,7 @@ int main()
 	int k = 0; //failo studentu kiekis
 	int p, s;
 	std::stringstream my_buffer;
+	
 
 
 	cout << "Ar nuskaityti studentu duomenys is failo ? [1]" << endl;
@@ -170,21 +171,13 @@ int main()
 				//---
 				Timer t1v;
 
-				vector<data> ::iterator it; it = sarasas.begin(); sarasas.erase(it);
-				int x = 0;
-				for (int i = 0; i < sarasas.size(); i++)
-				{
+				vargsiukai = sarasas; sarasas.erase(sarasas.begin()); vargsiukai.erase(vargsiukai.begin());
+				sarasas.erase(std::remove_if(sarasas.begin(), sarasas.end(), mazvidurkis), sarasas.end());
+				vargsiukai.erase(std::remove_if(vargsiukai.begin(), vargsiukai.end(), [](const data& a) {return a.vidrezult >= 5.0; }), vargsiukai.end());
 
-					if (sarasas[x].vidrezult < 5.0)
-					{
-						it = sarasas.begin() + x;
-						vargsiukai.push_back(sarasas[x]);
-						sarasas.erase(it);
-						x--;
-					}x++;
 
-				}
-				cout << "Studentu isskirstymas i viena vargsiuku vektoriu: " << t1v.elapsed() << " s" << endl;
+
+				cout << "Studentu isskirstymas i viena vargsiuku vektoriu su algoritmu: " << t1v.elapsed() << " s" << endl;
 			
 			//------------------------------------------------------------------------
 			std::ofstream out_f("vargsiukai.txt");

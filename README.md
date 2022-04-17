@@ -1,5 +1,12 @@
 # UŽDUOTIS
 
+##INSTRUKCIJA
+
+Vartotojas turi 3 pasirinkimus:
+1. Nuskaityti studentų duomenis iš failo;
+2. Įvesti duomenis rankiniu būdu: Įvesti vardą, pavardę, pasirinkti ar pažymius vesti rankiniu būdu ar sugeneruoti;
+3. Sugeneruoti studentų duomenų failą: Pasirinkti ar nuskaitytisugeneruotą failą ar ne;
+
 ## Pirmoji užduotis v0.1
 Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
 1. Vartotojas įvedą studento vardą ir pavardę. Studentų kiekis nėra ribojamas. Suvedus reikiamus duomenis apie studentą, vartotojas gauna užkalausą: "Ar norite ivesti dar vieno studento duomenis: [y/n]";
@@ -33,7 +40,19 @@ Programa išvedą studentų vardus ir pavardes bei studentų galutinius pažymiu
 2. Buvo atlikti laiko matavymai šių trijų konteinerių spartumo.
 3. Laiko matavimai:
 <img width="472" alt="5" src="https://user-images.githubusercontent.com/99173750/161427791-2aa6fcce-2c4d-4d1b-b3e5-b70b0de01c25.png">
-
-           
+Analizė: 
+Greičiausias uskirstymas studentu į skirtingus konteinerius - Deque;
+Greičiausias failo nuskaitymas ir suskaičiavimas - List;
 4. Sistemos parametrai:
 CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
+
+## Šeštoji užduotis v1.0
+Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
+1. Buvo ištestuotos 2 strategijos - vector, deque, list konteineriams
+<img width="334" alt="image" src="https://user-images.githubusercontent.com/99173750/163687457-6330c15b-7cc7-4e86-941a-a13728880386.png">
+Analizė:
+1 strategija greitesnė - Vector ir Deque konteineriais;
+2 strategija greitesnė - List konteineriu;
+2. Pritaikyti algoritmai studentų dalijimo procedūrai paspartinti (vector - konteinerio) - pritaikytas remove_if algoritmas
+<img width="388" alt="image" src="https://user-images.githubusercontent.com/99173750/163716564-6bca804b-2c73-4843-b267-342249a44af4.png">
+II strategija tris kartus pagreitėjo ir optimizavosi panaudojus remove_if algoritmą.

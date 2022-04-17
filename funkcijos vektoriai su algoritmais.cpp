@@ -160,21 +160,13 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 		//---
 		Timer t1v;
 
-		vector<data> ::iterator it; it = sarasas.begin(); sarasas.erase(it);
-		int x = 0;
-		for (int i = 0; i < sarasas.size(); i++)
-		{
+		vargsiukai = sarasas; sarasas.erase(sarasas.begin()); vargsiukai.erase(vargsiukai.begin());
+		sarasas.erase(std::remove_if(sarasas.begin(), sarasas.end(), mazvidurkis), sarasas.end());
+		vargsiukai.erase(std::remove_if(vargsiukai.begin(), vargsiukai.end(), [](const data& a) {return a.vidrezult >= 5.0; }), vargsiukai.end());
+		
 
-			if (sarasas[x].vidrezult < 5.0)
-			{
-				it = sarasas.begin() + x;
-				vargsiukai.push_back(sarasas[x]);
-				sarasas.erase(it);
-				x--;
-			}x++;
-			
-		}
-		cout << "Studentu isskirstymas i viena vargsiuku vektoriu: " << t1v.elapsed() << " s" << endl;
+		
+		cout << "Studentu isskirstymas i viena vargsiuku vektoriu su algoritmu: " << t1v.elapsed() << " s" << endl;
 
 
 		//------------------------------------------------------------------------
@@ -224,41 +216,10 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 		out_f.close();
 		out_s.close();
 		cout << "Studentu isvedimas i du naujus failus: " << t3.elapsed() << " s" << endl;
-	//string tittle; //zodzio string
-	//while (tittle != "Egz.") {
-	//	open_f >> tittle;
-	//	if (tittle == "Egz.") break;
-	//	else if (tittle.substr(0, 2) == "ND") {
-	//		n++;
-	//	}
-	//}
-	//while (open_f) {
-	//	if (!open_f.eof()) {
 
-	//		std::getline(open_f, a.vard, ' ');
-	//		std::getline(open_f, a.pav, ' ');
-
-	//		for (int i = 0; i < n; i++)
-	//		{
-	//			open_f >> a.paz[i];
-	//		}
-	//		open_f >> a.egz;
-
-	//		galutinisvid(a, n);
-
-	//		galutinismed(a, n);
-
-	//		sarasas.push_back(a);
-
-
-	//	}
-	//	else break;
-	//}
-
-	//open_f.close();
-
-	//sort(sarasas.begin(), sarasas.end(), rikiavimas);
+	
 }
+bool mazvidurkis(const data& a) { return a.vidrezult < 5.0;}
 void firasimas(data& a, int& n, vector<data>& sarasas)
 {
 	std::ofstream out_f("kursiokai_cop.txt");
