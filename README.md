@@ -5,7 +5,7 @@
 Vartotojas turi 3 pasirinkimus:
 1. Nuskaityti studentų duomenis iš failo;
 2. Įvesti duomenis rankiniu būdu: Įvesti vardą, pavardę, pasirinkti ar pažymius vesti rankiniu būdu ar sugeneruoti;
-3. Sugeneruoti studentų duomenų failą: Pasirinkti ar nuskaityti failą ar ne;
+3. Sugeneruoti studentų duomenų failą: Pasirinkti ar nuskaitytisugeneruotą failą ar ne;
 
 ## Pirmoji užduotis v0.1
 Šioje versijoje yra apskaičiuojamas studento ar studentų galutinis įvertinimas;
@@ -53,5 +53,5 @@ CPU - AMD Ryzen 7 x64, 8 CORES, 2000MHz; RAM - 2x8 GB RAM; SSD - 500GB;
 Analizė:
 1 strategija greitesnė - Vector ir Deque konteineriais;
 2 strategija greitesnė - List konteineriu;
-2. Pritaikyti algoritmai studentų dalijimo procedūrai paspartinti (vector - konteinerio).
-
+2. Pritaikyti algoritmai studentų dalijimo procedūrai paspartinti (vector - konteinerio) - pritaikytas remove_if algoritmas
+<img width="388" alt="image" src="https://user-images.githubusercontent.com/99173750/163716564-6bca804b-2c73-4843-b267-342249a44af4.png">
