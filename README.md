@@ -55,3 +55,4 @@ Analizė:
 2 strategija greitesnė - List konteineriu;
 2. Pritaikyti algoritmai studentų dalijimo procedūrai paspartinti (vector - konteinerio) - pritaikytas remove_if algoritmas
 <img width="388" alt="image" src="https://user-images.githubusercontent.com/99173750/163716564-6bca804b-2c73-4843-b267-342249a44af4.png">
+II strategija tris kartus pagreitėjo ir optimizavosi panaudojus remove_if algoritmą.
