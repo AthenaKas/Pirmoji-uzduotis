@@ -128,6 +128,8 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 
 				galutinisvid(a, m);
 
+				//galutinismed(a, m);
+
 				sarasas.push_back(a);
 				z++;
 
@@ -160,7 +162,7 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 		//---
 		Timer t1v;
 
-		vector<data> ::iterator it; it = sarasas.begin(); sarasas.erase(it);
+		/*vector<data> ::iterator it; it = sarasas.begin(); sarasas.erase(it);
 		int x = 0;
 		for (int i = 0; i < sarasas.size(); i++)
 		{
@@ -173,7 +175,7 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 				x--;
 			}x++;
 			
-		}
+		}*/
 		cout << "Studentu isskirstymas i viena vargsiuku vektoriu: " << t1v.elapsed() << " s" << endl;
 
 
@@ -190,11 +192,7 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 		out_k << setw(20) << "Galutinis (Vid.)" << endl;
 		out_k << "-----------------------------------------------------------------------------------------------------";
 
-		std::ofstream out_s("sarasas.txt");
-		out_s << std::left << setw(20) << "Vardas" << "| ";
-		out_s << setw(20) << "Pavarde" << " | ";
-		out_s << setw(20) << "Galutinis (Vid.)" << endl;
-		out_s << "-----------------------------------------------------------------------------------------------------";
+		
 
 
 		Timer t3;
@@ -213,51 +211,11 @@ void fskaitymas(data&a, int& n, vector<data>& sarasas, vector<data>& kietiakai, 
 			out_k << setw(20) << setprecision(2) << fixed << kietiakai[i].vidrezult << " | ";
 
 		}
-		for (int i = 1; i < sarasas.size(); i++)
-		{
-			out_s << setw(20) << sarasas[i].vard << " | " << setw(20) << sarasas[i].pav << " | ";
-
-			out_s << setw(20) << setprecision(2) << fixed << sarasas[i].vidrezult << " | ";
-
-		}
 		out_k.close();
 		out_f.close();
-		out_s.close();
+		
 		cout << "Studentu isvedimas i du naujus failus: " << t3.elapsed() << " s" << endl;
-	//string tittle; //zodzio string
-	//while (tittle != "Egz.") {
-	//	open_f >> tittle;
-	//	if (tittle == "Egz.") break;
-	//	else if (tittle.substr(0, 2) == "ND") {
-	//		n++;
-	//	}
-	//}
-	//while (open_f) {
-	//	if (!open_f.eof()) {
 
-	//		std::getline(open_f, a.vard, ' ');
-	//		std::getline(open_f, a.pav, ' ');
-
-	//		for (int i = 0; i < n; i++)
-	//		{
-	//			open_f >> a.paz[i];
-	//		}
-	//		open_f >> a.egz;
-
-	//		galutinisvid(a, n);
-
-	//		galutinismed(a, n);
-
-	//		sarasas.push_back(a);
-
-
-	//	}
-	//	else break;
-	//}
-
-	//open_f.close();
-
-	//sort(sarasas.begin(), sarasas.end(), rikiavimas);
 }
 void firasimas(data& a, int& n, vector<data>& sarasas)
 {
