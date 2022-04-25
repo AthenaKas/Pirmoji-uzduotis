@@ -147,14 +147,11 @@ int main()
 
 				open_f.close();
 				cout << "Duomenu nuskaitymas is failo ir galutinio pazymio suskaiciavimas: " << t2.elapsed() << " s" << endl;
-				//cout << z << endl;
-
-				sarasas.sort([](data a, data b) {
-					return a.vard > b.vard;
-					});
-
-			sarasas.reverse();
+				
 				Timer t1;
+				
+				sarasas.sort(rikiavimas);
+				
 
 				for (const auto& elem: sarasas)
 				{
@@ -168,7 +165,15 @@ int main()
 						kietiakai.push_back(elem);
 					}
 				}
-				cout << "Studentu isskirstymas i du vektorius: " << t1.elapsed() << " s" << endl;
+				cout << "Studentu isskirstymas i du list'us: " << t1.elapsed() << " s" << endl;
+				vargsiukai.clear();
+				//--
+
+				Timer t1v;
+				vargsiukai = sarasas; sarasas.erase(sarasas.begin()); vargsiukai.erase(vargsiukai.begin());
+				sarasas.erase(std::remove_if(sarasas.begin(), sarasas.end(), mazvidurkis), sarasas.end());
+				vargsiukai.erase(std::remove_if(vargsiukai.begin(), vargsiukai.end(), [](const data& a) {return a.vidrezult >= 5.0; }), vargsiukai.end());
+				cout << "Studentu isskirstymas i viena vargsiuku list'a: " << t1v.elapsed() << " s" << endl;
 			
 			//------------------------------------------------------------------------
 			std::ofstream out_f("vargsiukai.txt");
@@ -182,6 +187,12 @@ int main()
 			out_k << setw(20) << "Pavarde" << " | ";
 			out_k << setw(20) << "Galutinis (Vid.)" << endl;
 			out_k << "-----------------------------------------------------------------------------------------------------";
+
+			std::ofstream out_s("kietiakiai.txt");
+			out_s << std::left << setw(20) << "Vardas" << "| ";
+			out_s << setw(20) << "Pavarde" << " | ";
+			out_s << setw(20) << "Galutinis (Vid.)" << endl;
+			out_s << "-----------------------------------------------------------------------------------------------------";
 
 			Timer t3;
 			for (const auto& elem : vargsiukai)
@@ -206,6 +217,18 @@ int main()
 				
 
 			}
+			for (const auto& elem : sarasas)
+			{
+
+
+				out_s << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
+
+				out_s << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
+
+
+
+			}
+			out_s.close();
 			out_k.close();
 			out_f.close();
 			cout << "Studentu isvedimas i du naujus failus: " << t3.elapsed() << " s" << endl;
@@ -236,6 +259,8 @@ int main()
 	}
 
 		sarasas.clear();
+		vargsiukai.clear();
+		kietiakai.clear();
 
 		cout << "Visos programos veikimas " << t.elapsed() << " s" << endl;
 }

@@ -168,19 +168,10 @@ int main()
 				vargsiukai.clear();
 				//---
 				Timer t1v;
-				deque<data>::iterator it;
-				for (int i = 0; i < sarasas.size() - 1; i++)
-				{
+				vargsiukai = sarasas; sarasas.erase(sarasas.begin()); vargsiukai.erase(vargsiukai.begin());
+				sarasas.erase(std::remove_if(sarasas.begin(), sarasas.end(), mazvidurkis), sarasas.end());
+				vargsiukai.erase(std::remove_if(vargsiukai.begin(), vargsiukai.end(), [](const data& a) {return a.vidrezult >= 5.0; }), vargsiukai.end());
 
-					if (sarasas[i].vidrezult < 5.0)
-					{
-						it = sarasas.begin() + i;
-						vargsiukai.push_back(sarasas[i]);
-						sarasas.erase(it);
-
-					}
-
-				}
 				cout << "Studentu isskirstymas i viena vargsiuku deque: " << t1v.elapsed() << " s" << endl;
 
 				

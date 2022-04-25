@@ -91,7 +91,7 @@ bool rikiavimas(const data& a, const data& b)
 {
 	return a.vard < b.vard;
 }
-void fskaitymas(data&a, int& n, list<data>& sarasas, list<data>& kietiakai, list<data>& vargsiukai)
+void fskaitymas(data& a, int& n, list<data>& sarasas, list<data>& kietiakai, list<data>& vargsiukai)
 {
 	//----------------------------------------------------------------------
 	int r;
@@ -105,91 +105,120 @@ void fskaitymas(data&a, int& n, list<data>& sarasas, list<data>& kietiakai, list
 	int z = 0;
 	//int kiek = 0;
 	Timer t2;
-		string tittle; //zodzio string
-		while (tittle != "Egz.") {
-			open_f >> tittle;
-			if (tittle == "Egz.") break;
-			else if (tittle.substr(0, 2) == "ND") {
-				m++;
-			}
+	string tittle; //zodzio string
+	while (tittle != "Egz.") {
+		open_f >> tittle;
+		if (tittle == "Egz.") break;
+		else if (tittle.substr(0, 2) == "ND") {
+			m++;
 		}
+	}
 
-		while (open_f) {
-			if (!open_f.eof()) {
+	while (open_f) {
+		if (!open_f.eof()) {
 
-				std::getline(open_f, a.vard, ' ');
-				std::getline(open_f, a.pav, ' ');
+			std::getline(open_f, a.vard, ' ');
+			std::getline(open_f, a.pav, ' ');
 
-				for (int i = 0; i < m; i++)
-				{
-					open_f >> a.paz[i];
-				}
-				open_f >> a.egz;
-
-				galutinisvid(a, m);
-
-				sarasas.push_back(a);
-				z++;
-
-
-			}
-			else break;
-		}
-
-		open_f.close();
-		cout << "Duomenu nuskaitymas is failo ir galutinio pazymio suskaiciavimas: " << t2.elapsed() << " s" << endl;
-		//cout << z << endl;
-
-		sarasas.sort([](data a, data b) {
-			return a.vard > b.vard; });
-
-		Timer t1;
-		for (const auto& elem : sarasas)
-		{
-
-			if (elem.vidrezult < 5.0)
+			for (int i = 0; i < m; i++)
 			{
-				vargsiukai.push_back(elem);
+				open_f >> a.paz[i];
 			}
-			else if (elem.vidrezult >= 5.0)
-			{
-				kietiakai.push_back(elem);
-			}
+			open_f >> a.egz;
+
+			galutinisvid(a, m);
+
+			sarasas.push_back(a);
+			z++;
+
+
 		}
-		cout << "Studentu isskirstymas i du vektorius: " << t1.elapsed() << " s" << endl;
+		else break;
+	}
 
-		//------------------------------------------------------------------------
-		std::ofstream out_f("vargsiukai.txt");
-		out_f << std::left << setw(20) << "Vardas" << "| ";
-		out_f << setw(20) << "Pavarde" << " | ";
-		out_f << setw(20) << "Galutinis (Vid.)" << endl;
-		out_f << "-----------------------------------------------------------------------------------------------------";
+	open_f.close();
+	cout << "Duomenu nuskaitymas is failo ir galutinio pazymio suskaiciavimas: " << t2.elapsed() << " s" << endl;
+	//cout << z << endl;
 
-		std::ofstream out_k("kietiakiai.txt");
-		out_k << std::left << setw(20) << "Vardas" << "| ";
-		out_k << setw(20) << "Pavarde" << " | ";
-		out_k << setw(20) << "Galutinis (Vid.)" << endl;
-		out_k << "-----------------------------------------------------------------------------------------------------";
+	sarasas.sort([](data a, data b) {
+		return a.vard > b.vard; });
 
-		Timer t3;
-		for (const auto& elem : vargsiukai)
+	Timer t1;
+	for (const auto& elem : sarasas)
+	{
+
+		if (elem.vidrezult < 5.0)
 		{
-			out_f << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
-
-			out_f << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
-
+			vargsiukai.push_back(elem);
 		}
-		for (const auto& elem: kietiakai)
+		else if (elem.vidrezult >= 5.0)
 		{
-
-			out_k << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
-
-			out_k << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
-
+			kietiakai.push_back(elem);
 		}
-		out_k.close();
-		out_f.close();
-		cout << "Studentu isvedimas i du naujus failus: " << t3.elapsed() << " s" << endl;
+	}
+	cout << "Studentu isskirstymas i du list'us: " << t1.elapsed() << " s" << endl;
+	vargsiukai.clear();
+	//---
+	Timer t1v;
+	list<data>::iterator it = sarasas.begin(); sarasas.erase(it++);
+	while (it != sarasas.end())
+	{
+		if (it->vidrezult < 5.0)
+		{
+			vargsiukai.push_back(*it);
+			sarasas.erase(it++);
+		}
+		else
+		{
+			it++;
+		}
+	}
+	cout << "Studentu isskirstymas i viena vargsiuku list'a: " << t1v.elapsed() << " s" << endl;
+	//------------------------------------------------------------------------
+	std::ofstream out_f("vargsiukai.txt");
+	out_f << std::left << setw(20) << "Vardas" << "| ";
+	out_f << setw(20) << "Pavarde" << " | ";
+	out_f << setw(20) << "Galutinis (Vid.)" << endl;
+	out_f << "-----------------------------------------------------------------------------------------------------";
+
+	std::ofstream out_k("kietiakiai.txt");
+	out_k << std::left << setw(20) << "Vardas" << "| ";
+	out_k << setw(20) << "Pavarde" << " | ";
+	out_k << setw(20) << "Galutinis (Vid.)" << endl;
+	out_k << "-----------------------------------------------------------------------------------------------------";
+
+	std::ofstream out_s("sarasas.txt");
+	out_s << std::left << setw(20) << "Vardas" << "| ";
+	out_s << setw(20) << "Pavarde" << " | ";
+	out_s << setw(20) << "Galutinis (Vid.)" << endl;
+	out_s << "-----------------------------------------------------------------------------------------------------";
+
+	Timer t3;
+	for (const auto& elem : vargsiukai)
+	{
+		out_f << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
+
+		out_f << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
+
+	}
+	for (const auto& elem : kietiakai)
+	{
+
+		out_k << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
+
+		out_k << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
+
+	}
+	for(const auto& elem :sarasas)
+	{
+		out_s << setw(20) << elem.vard << " | " << setw(20) << elem.pav << " | ";
+
+		out_s << setw(20) << setprecision(2) << fixed << elem.vidrezult << " | ";
+	}
+	out_k.close();
+	out_f.close();
+	out_s.close();
+	cout << "Studentu isvedimas i du naujus failus: " << t3.elapsed() << " s" << endl;
 	//string tittle; //zodzio string
 	//while (tittle != "Egz.") {
 	//	open_f >> tittle;
@@ -225,6 +254,7 @@ void fskaitymas(data&a, int& n, list<data>& sarasas, list<data>& kietiakai, list
 
 	//sort(sarasas.begin(), sarasas.end(), rikiavimas);
 }
+bool mazvidurkis(const data& a) { return a.vidrezult < 5.0; }
 void firasimas(data& a, int& n, list<data>& sarasas)
 {
 	std::ofstream out_f("kursiokai_cop.txt");
@@ -246,7 +276,7 @@ void firasimas(data& a, int& n, list<data>& sarasas)
 	out_f.close();
 
 }
-void generacija(std::stringstream& my_buffer, int& n, int &s) //n - studentai, s - paz
+void generacija(std::stringstream& my_buffer, int& n, int& s) //n - studentai, s - paz
 {
 
 	//---
@@ -254,30 +284,30 @@ void generacija(std::stringstream& my_buffer, int& n, int &s) //n - studentai, s
 	std::mt19937 mt(static_cast<long unsigned int>(hrClock::now().time_since_epoch().count()));
 	std::uniform_int_distribution<int> dist(1, 10);
 	//---
-	
+
 	string var = "Vardas", pav = "Pavarde";
 	string nd = "ND", egz = "Egz.";
-	
-	Timer t1;
-	
-		my_buffer << var << " " << pav << " ";
-		for (int j = 0; j < s; j++)
-		{
-			my_buffer << nd << j + 1 << " ";
-		}
-		my_buffer << egz << endl;
-		
 
-		for (int k = 0; k < n; k++)
-		{
-			my_buffer << var << k + 1 << " " << pav << k + 1 << " ";
-			for (int j = 0; j < s; j++) my_buffer << dist(mt) << " "; //pazymiai
-			my_buffer << dist(mt) << endl; //egz paz;
-		}
-		string file = to_string(n) + ".txt";
-		std::ofstream out_f(file);
-		out_f << my_buffer.str();
-		out_f.close();
-		cout << n << " Failo kurimas ir jo uzdarimas " << t1.elapsed() << " s" << endl;
-		my_buffer.clear();
+	Timer t1;
+
+	my_buffer << var << " " << pav << " ";
+	for (int j = 0; j < s; j++)
+	{
+		my_buffer << nd << j + 1 << " ";
+	}
+	my_buffer << egz << endl;
+
+
+	for (int k = 0; k < n; k++)
+	{
+		my_buffer << var << k + 1 << " " << pav << k + 1 << " ";
+		for (int j = 0; j < s; j++) my_buffer << dist(mt) << " "; //pazymiai
+		my_buffer << dist(mt) << endl; //egz paz;
+	}
+	string file = to_string(n) + ".txt";
+	std::ofstream out_f(file);
+	out_f << my_buffer.str();
+	out_f.close();
+	cout << n << " Failo kurimas ir jo uzdarimas " << t1.elapsed() << " s" << endl;
+	my_buffer.clear();
 }

@@ -42,6 +42,7 @@ bool rikiavimas(const data& a, const data& b);
 void rezultatai(data& a);
 void fskaitymas(data& a, int& n, deque<data>& sarasas, deque<data>& kietiakai, deque<data>& vargsiukai);
 void firasimas(data& a, int& n, deque<data>& sarasas);
+bool mazvidurkis(const data& a);
 void generacija(std::stringstream& my_buffer, int& n, int& s);
 
 //---
